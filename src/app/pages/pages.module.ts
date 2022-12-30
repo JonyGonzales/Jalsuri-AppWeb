@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { DataTablesModule } from 'angular-datatables';
 import { HttpClientModule } from '@angular/common/http';
+import { CategoriaComponent } from './categoria/categoria.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     
   ],
-  declarations: [PagesComponent, UsuariosComponent]
+  declarations: [PagesComponent, UsuariosComponent, CategoriaComponent]
 })
 export class PagesModule { }

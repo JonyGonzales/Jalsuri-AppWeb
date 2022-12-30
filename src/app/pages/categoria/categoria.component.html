@@ -1,0 +1,192 @@
+<section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Lista de Categorias</h3>
+              <br />
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-toggle="modal"
+                data-target="#agregarCategoria"
+              >
+                <i class="fas fa-list-alt"></i> Agregar
+              </button>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table
+                datatable
+                [dtOptions]="dtOptions"
+                [dtTrigger]="dtTrigger"
+                class="row-border hover"
+              >
+                <thead style="background-color: #343a40; color: white">
+                  <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Status</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let categoria of categorias; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ categoria.nombre }}</td>
+                    <td>{{ categoria.estado }}</td>
+                    <td>
+                      <button class="btn btn-warning btn-xs mr-2"
+                      (click)="llenarForm(categoria.id)">
+                        <i class="fas fa-pencil-alt"></i>
+                      </button>
+  
+                      <button class="btn btn-danger btn-xs" (click)="eliminarCategoria(categoria.id)">
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
+                      
+                      <button *ngIf="categoria.estado == 'Activo'" class="btn btn-success btn-xs ml-2" (click)="cambiaEstado(categoria.id,categoria.estado)">
+                          <i class="fas fa-toggle-on"></i>
+                        </button>
+  
+                        <button *ngIf="categoria.estado != 'Activo'" class="btn btn-secondary btn-xs ml-2" (click)="cambiaEstado(categoria.id,categoria.estado)">
+                          <i class="fas fa-toggle-off"></i>
+                        </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+    </div>
+  
+    <!-- /Modal Agregar Categoria -->
+    <div class="modal fade" id="agregarCategoria">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Agregar Categorias</h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form
+              (ngSubmit)="crearCategorias()"
+              [formGroup]="registerForm"
+              autocomplete="off"
+            >
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Full name"
+                  formControlName="nombre"
+                />
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span
+                      class="fas fa-user"
+                      style="color: rgb(48, 37, 37)"
+                    ></span>
+                  </div>
+                </div>
+              </div>             
+              <div class="row">
+                <div class="col-8">
+                  <div class="col text-danger">
+                    <p *ngIf="campoNoValido('nombre')">El nombre es obligatorio</p>
+                  </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                  <button
+                    type="button"
+                    class="btn btn-default"
+                    data-dismiss="modal">
+                    Close
+                  </button>
+                  <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+  
+    <!-- /Modal Editar Categoria -->
+    <div class="modal fade" id="editarCategoria">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Editar Categoria</h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form
+              (ngSubmit)="editarCategoria()"
+              [formGroup]="registerForm"
+              autocomplete="off"
+            >
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Full name"
+                  formControlName="nombre"
+                />
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span
+                      class="fas fa-user"
+                      style="color: rgb(48, 37, 37)"
+                    ></span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-8">
+                  <div class="col text-danger">
+                    <p *ngIf="campoNoValido('nombre')">El nombre es obligatorio</p>
+                  </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                  <button
+                    type="button"
+                    class="btn btn-default"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+  </section>
+  

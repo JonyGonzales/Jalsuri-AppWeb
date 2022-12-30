@@ -7,9 +7,10 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { NopageFoundComponent } from './nopage-found/nopage-found.component';
 import { PagesModule } from './pages/pages.module';
+import { RecargaDirective } from './directives/recarga.directive';
 
 @NgModule({
-  declarations: [AppComponent, NopageFoundComponent],
+  declarations: [AppComponent, NopageFoundComponent, RecargaDirective],
   imports: [
     BrowserModule,
     AppRoutingModule,

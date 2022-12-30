@@ -28,11 +28,7 @@ export class SidebarService {
       icono: 'nav-icon fas fa-list',
       submenu: [
         { titulo: 'Listar Categorias', url: 'categorias', icono: 'fa fa-list' },
-        {
-          titulo: 'Agregar Categoria',
-          url: 'add-categorias',
-          icono: 'fa fa-plus',
-        },
+        { titulo: 'Agregar Categoria',url: 'add-categorias',icono: 'fa fa-plus'},
       ],
     },
     {
