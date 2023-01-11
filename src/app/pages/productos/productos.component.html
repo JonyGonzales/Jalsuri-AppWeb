@@ -1,0 +1,213 @@
+<section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Lista de Productos</h3>
+              <br />
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-toggle="modal"
+                data-target="#agregarCategoria"
+                (click)="llenarSelects()"
+              >
+                <i class="fas fa-prescription-bottle-alt"></i> Agregar
+              </button>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table
+                datatable
+                [dtOptions]="dtOptions"
+                [dtTrigger]="dtTrigger"
+                class="row-border hover"
+              >
+                <thead style="background-color: #343a40; color: white">
+                  <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Stock</th>
+                    <th>Precio</th>
+                    <th>Fecha Registro</th>
+                    <th>Fecha Vencimiento</th>
+                    <th>Categoria</th>
+                    <th>Presentacion</th>
+                    <th>Proveedor</th>
+                    <th>Status</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let producto of productos; let i = index">
+                    <td>{{ producto.id }}</td>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.stock }}</td>
+                    <td>{{ producto.precio }}</td>
+                    <td>{{ producto.fecha_ingreso }}</td>
+                    <td>{{ producto.fecha_vencimiento }}</td>
+                    <td>{{ producto.categoria.nombre }}</td>
+                    <td>{{ producto.unidad_medida.nombre }}</td>
+                    <td>{{ producto.proveedor.nombre }}</td>
+                    <td>{{ producto.estado }}</td>
+                    <td>
+                      <!-- <button class="btn btn-warning btn-xs mr-2"(click)="llenarForm(producto.id)"> -->
+                        <button class="btn btn-warning btn-xs mr-2">
+                        <i class="fas fa-pencil-alt"></i>
+                      </button>
+  
+                      <button class="btn btn-danger btn-xs">
+                        <!-- <button class="btn btn-danger btn-xs" (click)="eliminarCategoria(producto.id)"> -->
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
+                      
+                      <button *ngIf="producto.estado == 'Activo'" class="btn btn-success btn-xs ml-2" (click)="cambiaEstado(producto.id,producto.estado)">
+                          <i class="fas fa-toggle-on"></i>
+                        </button>
+  
+                        <button *ngIf="producto.estado != 'Activo'" class="btn btn-secondary btn-xs ml-2" (click)="cambiaEstado(producto.id,producto.estado)">
+                          <i class="fas fa-toggle-off"></i>
+                        </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+    </div>
+  
+    <!-- /Modal Agregar Productos -->
+    <div class="modal fade" id="agregarCategoria">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Agregar Productos</h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form
+                (ngSubmit)="crearProductos()"
+                [formGroup]="registerForm"
+                autocomplete="off"
+              >
+                <div class="input-group mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Nombre de Producto"
+                    formControlName="nombre"
+                  />
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <span
+                        class="fas fa-bottle"
+                        style="color: rgb(48, 37, 37)"
+                      ></span>
+                    </div>
+                  </div>
+                </div>      
+                
+                <div class="input-group mb-3">
+                    <input
+                      type="number"
+                      class="form-control"
+                      placeholder="Stock"
+                      formControlName="stock"
+                    />
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span
+                          class="fas fa-cube"
+                          style="color: rgb(48, 37, 37)"
+                        ></span>
+                      </div>
+                    </div>
+                  </div>  
+
+                  <div class="input-group mb-3">
+                    <input
+                      type="number"
+                      class="form-control"
+                      placeholder="Precio"
+                      formControlName="precio"
+                    />
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span
+                          class="fas fa-money"
+                          style="color: rgb(48, 37, 37)"
+                        ></span>
+                      </div>
+                    </div>
+                  </div>  
+                  <div class="form-group mb-3">
+                    <select
+                      class="form-control"
+                      formControlName="id_proveedor"
+                      (change)="proveedorSeleccionada($event)"
+                    >
+                    <option value="">Seleccione un Proveedor</option>
+                      <option *ngFor="let p of proveedores" value={{p.id}} >{{ p.nombre }}</option>
+                    </select>
+                  </div>    
+
+
+                  <div class="form-group mb-3">
+                    <select
+                      class="form-control"
+                      formControlName="id_categoria"
+                      (change)="categoriaSeleccionada($event)"
+                    >
+                    <option value="">Seleccione una Categoria</option>
+                      <option *ngFor="let c of categoria" value={{c.id}} >{{ c.nombre }}</option>
+                    </select>
+                  </div>    
+
+                  <div class="form-group mb-3">
+                    <select
+                      class="form-control"
+                      formControlName="id_unidad_medida"
+                      (change)="unidadMedidaSeleccionada($event)"
+                    >
+                    <option value="">Seleccione la Unidad de Medida</option>
+                      <option *ngFor="let i of unidadMedidas" value={{i.id}} >{{ i.nombre }}</option>
+                    </select>
+                  </div> 
+
+
+                <div class="row">
+                  <div class="col-8">
+                    <div class="col text-danger">
+                      <p *ngIf="campoNoValido('nombre')">El nombre es obligatorio</p>
+                    </div>
+                  </div>
+                  <div class="modal-footer justify-content-between">
+                    <button
+                      type="button"
+                      class="btn btn-default"
+                      data-dismiss="modal">
+                      Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+    </div>
+  </section>
+  

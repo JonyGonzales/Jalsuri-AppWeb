@@ -8,11 +8,12 @@ import { EditForm } from '../interfaces/edit-form-interface';
 import { Usuario } from '../models/usuario';
 import { Observable } from 'rxjs';
 import { CambioEstado } from '../interfaces/cambio-estado.interface';
+import { environment } from 'src/environments/environment.prod';
 
 // http://localhost:8080/api/v1
-//const URL = environment.urlServer;
 
-const URL = 'http://localhost:8080/api/v1';
+const URLSUBFIJO = '/usuarios'
+const URL = environment.URLBASE + URLSUBFIJO;
 
 @Injectable({
   providedIn: 'root',
@@ -21,13 +22,13 @@ export class UsuarioService {
   constructor(private http: HttpClient) {}
 
   newUsuario(formData: RegisterForm) {
-    return this.http.post(`${URL}/usuarios`, formData, {
+    return this.http.post(`${URL}`, formData, {
       responseType: 'text',
     });
   }
 
   login(formData: LoginForm) {
-    return this.http.post(`${URL}/auth/login`, formData).pipe(
+    return this.http.post(`${environment.URLBASE}/auth/login`, formData).pipe(
       tap((res: any) => {
         console.log(res);
         //  localStorage.setItem('token',res.token);
@@ -38,7 +39,7 @@ export class UsuarioService {
   }
 
   obtenerUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(`${URL}/usuarios`);
+    return this.http.get<Usuario[]>(`${URL}`);
   }
 
   deleteUsuario(id: number) {
@@ -46,7 +47,7 @@ export class UsuarioService {
     //       'token': this.token
     //     });
 
-    return this.http.delete(`${URL}/usuarios/${id}`);
+    return this.http.delete(`${URL}/${id}`);
   }
 
   cambioPassword(id: number, cambioPass: CambioPassword) {
@@ -55,7 +56,7 @@ export class UsuarioService {
     //     });
 
     //     return this.http.put(`${URL}/usuarios/cambio-password/${id}`, cambioPass, {headers, responseType:'text'} );
-    return this.http.put(`${URL}/usuarios/cambioPassword/${id}`, cambioPass);
+    return this.http.put(`${URL}/cambioPassword/${id}`, cambioPass);
   }
 
   obtenerIdUsuario(id: number) {
@@ -64,7 +65,7 @@ export class UsuarioService {
     //     });
 
     //     return this.http.get(`${URL}/usuarios/${id}`,{headers});
-    return this.http.get(`${URL}/usuarios/${id}`);
+    return this.http.get(`${URL}/${id}`);
   }
 
   editarUsuario(id: number, editData: EditForm) {
@@ -73,10 +74,10 @@ export class UsuarioService {
     //     });
 
     //     return this.http.put(`${URL}/usuarios/${id}`, editData, {headers});
-    return this.http.put(`${URL}/usuarios/${id}`, editData);
+    return this.http.put(`${URL}/${id}`, editData);
   }
 
   actualizaEstadoUsuario(id: number, editData: CambioEstado) {
-    return this.http.put(`${URL}/usuarios/cambiaEstado/${id}`, editData);
+    return this.http.put(`${URL}/cambiaEstado/${id}`, editData);
   }
 }

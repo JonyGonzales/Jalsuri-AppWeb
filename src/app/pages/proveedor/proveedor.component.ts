@@ -1,22 +1,22 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/internal/Subject';
 import Swal from 'sweetalert2';
-import { Categoria } from './models/categoria';
-import { CategoriaService } from './services/categoria.service';
+import { Proveedor } from './model/proveedor';
+import { ProveedorService } from './service/proveedor.service';
 
 
 declare var $: any;
 
 @Component({
-  selector: 'app-categoria',
-  templateUrl: './categoria.component.html',
-  styleUrls: ['./categoria.component.css']
+  selector: 'app-proveedor',
+  templateUrl: './proveedor.component.html',
+  styleUrls: ['./proveedor.component.css']
 })
-export class CategoriaComponent implements OnInit, OnDestroy{
+export class ProveedorComponent implements OnInit, OnDestroy{
   dtOptions: any = {};
-  categorias: Categoria[] = [];
+  proveedores: Proveedor[] = [];
   dtTrigger: Subject<any> = new Subject<any>();
 
   formSubmitted = false;
@@ -24,6 +24,9 @@ export class CategoriaComponent implements OnInit, OnDestroy{
   public registerForm = this.fb.group(
     {
       nombre: ['', [Validators.required]],
+      documento: ['', [Validators.required]],
+      telefono: ['', [Validators.required]],
+      email: ['', [Validators.required]],
     },
     {
       Validators
@@ -31,7 +34,7 @@ export class CategoriaComponent implements OnInit, OnDestroy{
   );
 
    constructor(
-    private categoriaService: CategoriaService,
+    private proveedorService: ProveedorService,
     private fb: FormBuilder,
     private router: Router
   ) {}
@@ -47,12 +50,12 @@ export class CategoriaComponent implements OnInit, OnDestroy{
       dom: 'Bfrtip',
       buttons: ['colvis', 'copy', 'print', 'excel'],
     };
-    this.obtenerCategoria();
+    this.obtenerProveedor();
   }
 
-  obtenerCategoria() {
-    this.categoriaService.obtenerCategorias().subscribe((dato: any) => {
-      this.categorias = dato;
+  obtenerProveedor() {
+    this.proveedorService.obtenerProveedor().subscribe((dato: any) => {
+      this.proveedores = dato;
       this.dtTrigger.next(this.dtOptions);
     });
   }
@@ -71,7 +74,7 @@ export class CategoriaComponent implements OnInit, OnDestroy{
     this.dtTrigger.unsubscribe();
   }
 
-  crearCategorias() {
+  crearProveedor() {
     console.log(this.registerForm.value)
     this.formSubmitted = true;
     if (this.registerForm.invalid) {
@@ -79,12 +82,12 @@ export class CategoriaComponent implements OnInit, OnDestroy{
     }
 
     //Realizar posteo
-    this.categoriaService.newCategoria(this.registerForm.value).subscribe(
+    this.proveedorService.newProveedor(this.registerForm.value).subscribe(
       (res) => {
         Swal.fire({
           icon: 'success',
           title: 'Exito',
-          text: 'Categoria creado correctamente',
+          text: 'Proveedor creado correctamente',
           showConfirmButton: true,
         }).then((result) => {
           location.reload();
@@ -99,21 +102,25 @@ export class CategoriaComponent implements OnInit, OnDestroy{
   }
 
   llenarForm(id: number) {
-    this.categoriaService.obtenerIdCategoria(id).subscribe((res) => {
+    this.proveedorService.obtenerIdProveedor(id).subscribe((res) => {
       this.registerForm.setValue({
-        nombre: res['nombre']
+        nombre: res['nombre'],
+        documento: res['documento'],
+        telefono: res['telefono'],
+        email: res['email'],
+
         });
 
-      $('#editarCategoria').modal('toggle');
-      $('#editarCategoria').modal('show');
+      $('#editarProveedor').modal('toggle');
+      $('#editarProveedor').modal('show');
 
       localStorage.setItem('idCat', res['id']);
     });
   }
 
-  editarCategoria() {
-    this.categoriaService
-      .editarCategoria(
+  editarProveedor() {
+    this.proveedorService
+      .editarProveedor(
         parseInt(localStorage.getItem('idCat')),
         this.registerForm.value
       )
@@ -122,7 +129,7 @@ export class CategoriaComponent implements OnInit, OnDestroy{
           Swal.fire({
             icon: 'success',
             title: 'Exito',
-            text: 'El categoria se actualizo correctamente',
+            text: 'El proveedor se actualizo correctamente',
             confirmButtonText: 'Ok',
           }).then((result) => {
             if (result) {
@@ -137,19 +144,19 @@ export class CategoriaComponent implements OnInit, OnDestroy{
       );
   }
 
-  eliminarCategoria(id: number) {
+  eliminarProveedor(id: number) {
       Swal.fire({
         icon: 'question',
-        title: 'Desea eliminar este categoria?',
+        title: 'Desea eliminar este proveedor?',
         showCancelButton: true,
         confirmButtonText: 'Confirmar',
       }).then((result) => {
         if (result.isConfirmed) {
-          this.categoriaService.deleteCategoria(id).subscribe(
+          this.proveedorService.deleteProveedor(id).subscribe(
             (res: any) => {
               Swal.fire({
                 icon: 'success',
-                title: 'Categoria eliminado correctamente',
+                title: 'Proveedor eliminado correctamente',
                 confirmButtonText: 'Ok',
               }).then((result) => {
                 if (result) {
@@ -182,20 +189,20 @@ export class CategoriaComponent implements OnInit, OnDestroy{
     }
       Swal.fire({
         icon: 'question',
-        title: 'Desea Modificar el estado de este categoria?',
+        title: 'Desea Modificar el estado de este proveedor?',
         showCancelButton: true,
         confirmButtonText: 'Confirmar',
       }).then((result) => {
         if (result.isConfirmed) {
-          this.categoriaService.actualizaEstadoCategoria(id, dato).subscribe(
+          this.proveedorService.actualizaEstadoProveedor(id, dato).subscribe(
             (res) => {
               Swal.fire({
                 icon: 'success',
-                title: 'Categoria Actualizado correctamente',
+                title: 'Proveedor Actualizado correctamente',
                 confirmButtonText: 'Ok',
               }).then((result) => {
                 if (result) {
-                  //this.categoriaService.obtenerCategorias().subscribe((dato: any) => {this.categorias = dato;});
+                  //this.proveedorService.obtenerProveedors().subscribe((dato: any) => {this.proveedors = dato;});
                   location.reload();
                   //this.ngOnDestroy();
                 }

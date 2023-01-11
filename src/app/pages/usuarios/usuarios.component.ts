@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Usuario } from 'src/app/models/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { Subject } from 'rxjs';
 
 declare var $: any;
 
@@ -81,7 +81,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     if (this.registerForm.invalid) {
       return;
     }
-
+    console.log(this.registerForm.value)
     //Realizar posteo
     this.usuarioService.newUsuario(this.registerForm.value).subscribe(
       (res) => {

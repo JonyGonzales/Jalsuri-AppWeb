@@ -8,6 +8,8 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { DataTablesModule } from 'angular-datatables';
 import { HttpClientModule } from '@angular/common/http';
 import { CategoriaComponent } from './categoria/categoria.component';
+import { ProductosComponent } from './productos/productos.component';
+import { ProveedorComponent } from './proveedor/proveedor.component';
 
 @NgModule({
   imports: [
@@ -20,6 +22,6 @@ import { CategoriaComponent } from './categoria/categoria.component';
     ReactiveFormsModule,
     
   ],
-  declarations: [PagesComponent, UsuariosComponent, CategoriaComponent]
+  declarations: [PagesComponent, UsuariosComponent, CategoriaComponent, ProductosComponent, ProveedorComponent]
 })
 export class PagesModule { }

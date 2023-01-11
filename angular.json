@@ -13,6 +13,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "rxjs-compat"
+           ],
             "outputPath": "dist/jalsuri-app-2.1",
             "index": "src/index.html",
             "main": "src/main.ts",

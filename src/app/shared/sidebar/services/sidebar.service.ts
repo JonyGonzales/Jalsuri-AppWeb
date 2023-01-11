@@ -35,16 +35,22 @@ export class SidebarService {
       titulo: 'Productos',
       icono: 'nav-icon fas fa-boxes',
       submenu: [
-        {
-          titulo: 'Listado de Productos',
-          url: 'productos',
-          icono: 'fa fa-list',
-        },
-        {
-          titulo: 'Agregar Productos',
-          url: 'add-productos',
-          icono: 'fa fa-cubes',
-        },
+        {titulo: 'Listado de Productos',url: 'productos',icono: 'fa fa-list'},
+        {titulo: 'Agregar Productos',url: 'add-productos',icono: 'fa fa-cubes'},
+      ],
+    },
+    {
+      titulo: 'Empleados',
+      icono: 'nav-icon fas fa-hard-hat ',
+      submenu: [
+        {titulo: 'Listado de Empleados',url: 'empleados',icono: 'fa fa-employe'},
+      ],
+    },
+    {
+      titulo: 'Proveedores',
+      icono: 'nav-icon fas fa-truck ',
+      submenu: [
+        {titulo: 'Listado de Proveedores',url: 'proveedores',icono: 'fa fa-truck'},
       ],
     },
   ];
