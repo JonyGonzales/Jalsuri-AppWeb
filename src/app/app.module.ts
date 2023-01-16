@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { NopageFoundComponent } from './nopage-found/nopage-found.component';
 import { PagesModule } from './pages/pages.module';
 import { RecargaDirective } from './directives/recarga.directive';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, NopageFoundComponent, RecargaDirective],
@@ -17,6 +18,7 @@ import { RecargaDirective } from './directives/recarga.directive';
     PagesModule,
     HttpClientModule,
     AuthModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

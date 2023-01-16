@@ -10,6 +10,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { CategoriaComponent } from './categoria/categoria.component';
 import { ProductosComponent } from './productos/productos.component';
 import { ProveedorComponent } from './proveedor/proveedor.component';
+import { InsumosComponent } from './insumos/insumos.component';
+import { MaterialModule } from 'material.module';
+import { TableWrappedExample, WrapperTable } from './table-wrapped-example/table-wrapped-example.component';
 
 @NgModule({
   imports: [
@@ -20,8 +23,11 @@ import { ProveedorComponent } from './proveedor/proveedor.component';
     DataTablesModule,
     HttpClientModule,
     ReactiveFormsModule,
-    
+    MaterialModule
   ],
-  declarations: [PagesComponent, UsuariosComponent, CategoriaComponent, ProductosComponent, ProveedorComponent]
+  declarations: [PagesComponent, UsuariosComponent, CategoriaComponent, ProductosComponent, ProveedorComponent, InsumosComponent, TableWrappedExample,WrapperTable]
+  ,
+  providers: [],
+  bootstrap: [InsumosComponent],
 })
 export class PagesModule { }

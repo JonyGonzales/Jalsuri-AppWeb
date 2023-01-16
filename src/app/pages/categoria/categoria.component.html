@@ -25,7 +25,7 @@
               >
                 <thead style="background-color: #343a40; color: white">
                   <tr>
-                    <th>#</th>
+                    <th>Id</th>
                     <th>Nombre</th>
                     <th>Status</th>
                     <th>Acciones</th>
@@ -33,7 +33,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let categoria of categorias; let i = index">
-                    <td>{{ i + 1 }}</td>
+                    <td>{{ categoria.id }}</td>
                     <td>{{ categoria.nombre }}</td>
                     <td>{{ categoria.estado }}</td>
                     <td>
