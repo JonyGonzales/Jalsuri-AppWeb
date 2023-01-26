@@ -30,6 +30,7 @@
                   <th>Email</th>
                   <th>Password</th>
                   <th>Role</th>
+                  <th>Area</th>
                   <th>Status</th>
                   <th>Acciones</th>
                 </tr>
@@ -46,6 +47,7 @@
                     </button>
                   </td>
                   <td>{{ usuario.role }}</td>
+                  <td>{{ usuario.area }}</td>
                   <td>{{ usuario.estado }}</td>
                   <td>
                     <button class="btn btn-warning btn-xs mr-2"
@@ -129,6 +131,24 @@
                 </div>
               </div>
             </div>
+
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Area"
+                formControlName="area"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span
+                    class="fas fa-user"
+                    style="color: rgb(48, 37, 37)"
+                  ></span>
+                </div>
+              </div>
+            </div>
+
             <div class="input-group mb-3">
               <input
                 type="password"
@@ -177,6 +197,7 @@
                   <p *ngIf="campoNoValido('nombre')">El nombre es obligatorio</p>
                   <p *ngIf="campoNoValido('email')">El email es obligatorio</p>
                   <p *ngIf="campoNoValido('role')">El role es obligatorio</p>
+                  <p *ngIf="campoNoValido('area')">El area es obligatoria</p>
                   <p *ngIf="constrasenasNoValidas()">
                     Las contraseñas tienen que ser iguales
                   </p>

@@ -45,8 +45,9 @@ export class CategoriaComponent implements OnInit, OnDestroy{
       info: true,
       language: { url: '//cdn.datatables.net/plug-ins/1.13.1/i18n/es-MX.json' },
       dom: 'Bfrtip',
-      buttons: ['colvis', 'copy', 'print', 'excel'],
-    };
+      buttons: ['colvis', 'copy', 'print', 'excel']
+      
+    };  
 
     this.obtenerCategoria();
   }
@@ -88,8 +89,7 @@ export class CategoriaComponent implements OnInit, OnDestroy{
           text: 'Categoria creado correctamente',
           showConfirmButton: true,
         }).then((result) => {
-          this.ngOnDestroy();
-          this.obtenerCategoria();
+
           $('#agregarCategoria').modal('toggle');
           $('#agregarCategoria').modal('hide');
         });

@@ -28,6 +28,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
       password: ['', [Validators.required]],
       password2: ['', [Validators.required]],
       role: ['', [Validators.required]],
+      area: ['', [Validators.required]],
     },
     {
       validators: this.passwordsIguales('password', 'password2'),
@@ -59,8 +60,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
       info: true,
       language: { url: '//cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json' },
       dom: 'Bfrtip',
-      //buttons: ['copy', 'print', 'excel'],
-      buttons: ['colvis', 'copy', 'print', 'excel'],
+      buttons: ['copy', 'print', 'excel'],
     };
     this.obtenerUsuario();
   }
@@ -122,6 +122,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
         password: '',
         password2: '',
         role: res['role'],
+        area: res['area'],
       });
 
       $('#editarUsuario').modal('toggle');
