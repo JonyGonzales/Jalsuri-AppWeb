@@ -2,56 +2,57 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CambioEstado } from 'src/app/interfaces/cambio-estado.interface';
-import { EditForm } from 'src/app/interfaces/edit-form-interface';
-import { RegisterForm } from 'src/app/interfaces/register-form.interface';
 import { environment } from 'src/environments/environment.prod';
-import { Categoria } from '../models/categoria';
+import { EditForm } from '../interfaces/edit-form-interface';
+import { RegisterForm } from '../interfaces/register-form.interface';
+import { Movimiento_almacen } from '../models/movimiento_almacen';
 
 
-// http://localhost:8080/api/v1
-const URLSUBFIJO = '/categorias'
-const URL = environment.URLBASE + URLSUBFIJO;
+const URLSUBFIJO = '/movimientoalmacen'
+const URL = environment.URLBASE+URLSUBFIJO
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriaService {
+export class Movimiento_almacenService {
+
   constructor(private http: HttpClient) {}
 
-  newCategoria(formData: RegisterForm) {
+  agregar(formData: RegisterForm) {
     return this.http.post(`${URL}`, formData, {
       responseType: 'text',
     });
   }
 
-  obtenerCategorias(): Observable<Categoria[]> {
-    return this.http.get<Categoria[]>(`${URL}`);
+  listar(): Observable<Movimiento_almacen[]> {
+    return this.http.get<Movimiento_almacen[]>(`${URL}`);
   }
 
-  deleteCategoria(id: number) {
+  eliminar(id: number) {
     //     let headers = new HttpHeaders({
     //       'token': this.token
     //     });
     return this.http.delete(`${URL}/${id}`);
   }
 
-  obtenerIdCategoria(id: number) {
+  buscarXid(id: number) {
     //     let headers = new HttpHeaders({
     //       'token': this.token
     //     });
-    //     return this.http.get(`${URL}/${id}`,{headers});
+    //     return this.http.get(`${URL}/movimiento_almacens/${id}`,{headers});
     return this.http.get(`${URL}/${id}`);
   }
 
-  editarCategoria(id: number, editData: EditForm) {
+  editar(id: number, editData: EditForm) {
     //     let headers = new HttpHeaders({
     //       'token': this.token
     //     });
-    //     return this.http.put(`${URL}/${id}`, editData, {headers});
+    //     return this.http.put(`${URL}/movimiento_almacens/${id}`, editData, {headers});
     return this.http.put(`${URL}/${id}`, editData);
   }
 
-  actualizaEstadoCategoria(id: number, dato: CambioEstado) {
-    return this.http.put(`${URL}/cambiaEstado/${id}`, dato);
+  cambioEstado(id: number, editData: CambioEstado) {
+    return this.http.put(`${URL}/cambiaEstado/${id}`, editData);
   }
 }

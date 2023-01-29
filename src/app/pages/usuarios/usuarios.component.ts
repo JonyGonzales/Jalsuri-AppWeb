@@ -47,8 +47,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 
   constructor(
     private usuarioService: UsuarioService,
-    private fb: FormBuilder,
-    private router: Router
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -92,6 +91,8 @@ export class UsuariosComponent implements OnInit, OnDestroy {
           showConfirmButton: true,
         }).then((result) => {
           location.reload();
+          //this.usuarioService.obtenerUsuarios().subscribe((dato: any) => {this.usuarios = dato;});
+
         });
       },
       (err) => {
@@ -133,13 +134,15 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   }
 
   editarUsuario() {
-    this.usuarioService
+    
+      this.usuarioService
       .editarUsuario(
         parseInt(localStorage.getItem('idUser')),
         this.registerForm.value
       )
       .subscribe(
         (res) => {
+          console.log(this.registerForm.value)
           Swal.fire({
             icon: 'success',
             title: 'Exito',
@@ -150,6 +153,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
               localStorage.removeItem('idUser');
               localStorage.removeItem('userId');
               location.reload();
+              //this.usuarioService.obtenerUsuarios().subscribe((dato: any) => {this.usuarios = dato;});
             }
           });
         },
@@ -171,7 +175,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
            confirmButtonText: 'Ok',
          }).then((result) => {
            if (result) {
-             location.reload();
+             //location.reload();
              localStorage.removeItem('userId');
            }
          });

@@ -3,19 +3,19 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/internal/Subject';
 import Swal from 'sweetalert2';
-import { Proveedor } from './model/proveedor';
-import { ProveedorService } from './service/proveedor.service';
+import { Cliente } from './model/cliente';
+import { ClienteService } from './service/cliente.service';
 
 declare var $: any;
 
 @Component({
-  selector: 'app-proveedor',
-  templateUrl: './proveedor.component.html',
-  styleUrls: ['./proveedor.component.css'],
+  selector: 'app-cliente',
+  templateUrl: './cliente.component.html',
+  styleUrls: ['./cliente.component.css'],
 })
-export class ProveedorComponent implements OnInit, OnDestroy {
+export class ClienteComponent implements OnInit, OnDestroy {
   dtOptions: any = {};
-  proveedores: Proveedor[] = [];
+  clientees: Cliente[] = [];
   dtTrigger: Subject<any> = new Subject<any>();
 
   formSubmitted = false;
@@ -33,7 +33,7 @@ export class ProveedorComponent implements OnInit, OnDestroy {
   );
 
   constructor(
-    private proveedorService: ProveedorService,
+    private clienteService: ClienteService,
     private fb: FormBuilder,
     private router: Router
   ) {}
@@ -49,12 +49,12 @@ export class ProveedorComponent implements OnInit, OnDestroy {
       dom: 'Bfrtip',
       buttons: ['colvis', 'copy', 'print', 'excel'],
     };
-    this.obtenerProveedor();
+    this.obtenerCliente();
   }
 
-  obtenerProveedor() {
-    this.proveedorService.obtenerProveedor().subscribe((dato: any) => {
-      this.proveedores = dato;
+  obtenerCliente() {
+    this.clienteService.obtenerCliente().subscribe((dato: any) => {
+      this.clientees = dato;
       this.dtTrigger.next(this.dtOptions);
     });
   }
@@ -73,7 +73,7 @@ export class ProveedorComponent implements OnInit, OnDestroy {
     this.dtTrigger.unsubscribe();
   }
 
-  crearProveedor() {
+  crearCliente() {
     console.log(this.registerForm.value);
     this.formSubmitted = true;
     if (this.registerForm.invalid) {
@@ -81,12 +81,12 @@ export class ProveedorComponent implements OnInit, OnDestroy {
     }
 
     //Realizar posteo
-    this.proveedorService.newProveedor(this.registerForm.value).subscribe(
+    this.clienteService.newCliente(this.registerForm.value).subscribe(
       (res) => {
         Swal.fire({
           icon: 'success',
           title: 'Exito',
-          text: 'Proveedor creado correctamente',
+          text: 'Cliente creado correctamente',
           showConfirmButton: true,
         }).then((result) => {
           location.reload();
@@ -101,7 +101,7 @@ export class ProveedorComponent implements OnInit, OnDestroy {
   }
 
   llenarForm(id: number) {
-    this.proveedorService.obtenerIdProveedor(id).subscribe((res) => {
+    this.clienteService.obtenerIdCliente(id).subscribe((res) => {
       this.registerForm.setValue({
         nombre: res['nombre'],
         documento: res['documento'],
@@ -109,16 +109,16 @@ export class ProveedorComponent implements OnInit, OnDestroy {
         email: res['email'],
       });
 
-      $('#editarProveedor').modal('toggle');
-      $('#editarProveedor').modal('show');
+      $('#editarCliente').modal('toggle');
+      $('#editarCliente').modal('show');
 
       localStorage.setItem('idCat', res['id']);
     });
   }
 
-  editarProveedor() {
-    this.proveedorService
-      .editarProveedor(
+  editarCliente() {
+    this.clienteService
+      .editarCliente(
         parseInt(localStorage.getItem('idCat')),
         this.registerForm.value
       )
@@ -127,7 +127,7 @@ export class ProveedorComponent implements OnInit, OnDestroy {
           Swal.fire({
             icon: 'success',
             title: 'Exito',
-            text: 'El proveedor se actualizo correctamente',
+            text: 'El cliente se actualizo correctamente',
             confirmButtonText: 'Ok',
           }).then((result) => {
             if (result) {
@@ -142,19 +142,19 @@ export class ProveedorComponent implements OnInit, OnDestroy {
       );
   }
 
-  eliminarProveedor(id: number) {
+  eliminarCliente(id: number) {
     Swal.fire({
       icon: 'question',
-      title: 'Desea eliminar este proveedor?',
+      title: 'Desea eliminar este cliente?',
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.proveedorService.deleteProveedor(id).subscribe(
+        this.clienteService.deleteCliente(id).subscribe(
           (res: any) => {
             Swal.fire({
               icon: 'success',
-              title: 'Proveedor eliminado correctamente',
+              title: 'Cliente eliminado correctamente',
               confirmButtonText: 'Ok',
             }).then((result) => {
               if (result) {
@@ -187,20 +187,20 @@ export class ProveedorComponent implements OnInit, OnDestroy {
     }
     Swal.fire({
       icon: 'question',
-      title: 'Desea Modificar el estado de este proveedor?',
+      title: 'Desea Modificar el estado de este cliente?',
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.proveedorService.actualizaEstadoProveedor(id, dato).subscribe(
+        this.clienteService.actualizaEstadoCliente(id, dato).subscribe(
           (res) => {
             Swal.fire({
               icon: 'success',
-              title: 'Proveedor Actualizado correctamente',
+              title: 'Cliente Actualizado correctamente',
               confirmButtonText: 'Ok',
             }).then((result) => {
               if (result) {
-                //this.proveedorService.obtenerProveedors().subscribe((dato: any) => {this.proveedors = dato;});
+                //this.clienteService.obtenerClientes().subscribe((dato: any) => {this.clientes = dato;});
                 location.reload();
                 //this.ngOnDestroy();
               }

@@ -53,6 +53,21 @@ export class SidebarService {
         {titulo: 'Listado de Proveedores',url: 'proveedores',icono: 'fa fa-truck'},
       ],
     },
+    {
+      titulo: 'Clientes',
+      icono: 'nav-icon fas fa-truck ',
+      submenu: [
+        {titulo: 'Listado de Clientes',url: 'clientes',icono: 'fa fa-truck'},
+      ],
+    },
+    {
+      titulo: 'Movimientos',
+      icono: 'nav-icon fas fa-truck ',
+      submenu: [
+        {titulo: 'Movimientos en Almacen',url: 'movimientos',icono: 'fa fa-truck'},
+      ],
+    },
+
   ];
   constructor() {}
 }

@@ -1,58 +1,69 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { UnidadMedida } from 'src/app/models/unidad-medida';
-import { UnidadMedidaService } from 'src/app/services/unidad-medida.service';
+import { Usuario } from 'src/app/models/usuario';
+import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
-import { Categoria } from '../categoria/models/categoria';
-import { CategoriaService } from '../categoria/services/categoria.service';
+import { Cliente } from '../cliente/model/cliente';
+import { ClienteService } from '../cliente/service/cliente.service';
 import { Proveedor } from '../proveedor/model/proveedor';
 import { ProveedorService } from '../proveedor/service/proveedor.service';
-import { Producto } from './models/producto';
-import { ProductoService } from './services/producto.service';
-
-declare var $: any;
+import { Movimiento_almacen } from './models/movimiento_almacen';
+import { Tipo_documento } from './models/tipo_documento';
+import { Tipo_movimiento } from './models/tipo_movimiento';
+import { Movimiento_almacenService } from './services/movimientoAlmacen.service';
+import { TipoDocumentoService } from './services/tipoDocumento.service';
+import { TipoMovimientoService } from './services/tipoMovimiento.service';
 
 @Component({
-  selector: 'app-producto',
-  templateUrl: './productos.component.html',
-  styleUrls: ['./productos.component.css'],
+  selector: 'app-movimientos-almacen',
+  templateUrl: './movimientos-almacen.component.html',
+  styleUrls: ['./movimientos-almacen.component.css'],
 })
-export class ProductosComponent implements OnInit, OnDestroy {
-  dtOptions: any = {};
-  productos: Producto[] = [];
-  categoria: Categoria[] = [];
-  unidadMedidas: UnidadMedida[] = [];
-  proveedores: Proveedor[]=[];
-  dtTrigger= new Subject();
+export class MovimientosAlmacenComponent implements OnDestroy, OnInit {
+  dtOptions: DataTables.Settings = {};
+  dtTrigger = new Subject();
+  movimientos: Movimiento_almacen[] = [];
+  tipoDoc: Tipo_documento[] = [];
+  tipoMov: Tipo_movimiento[] = [];
+  usuarios: Usuario[] = [];
+  proveedores: Proveedor[] = [];
+  clientes: Cliente[] = [];
+
+  movSelec: Tipo_movimiento[] = [];
 
   formSubmitted = false;
+
   // con estos Valores enviamos al Web Service
   public registerForm = this.fb.group(
     {
-      nombre: ['', [Validators.required]],
-      stock: ['', [Validators.required]],
-      precio: ['', [Validators.required]],
-      id_categoria: ['', [Validators.required]],
-      id_unidad_medida: ['', [Validators.required]],
-      id_proveedor: ['', [Validators.required]],
+      observaciones: [''],
+      tipo_movimiento: ['', [Validators.required]],
+      tipo_documento: ['', [Validators.required]],
+      numero_documento: ['', [Validators.required]],
+      proveedor: [''],
+      cliente: [''],
+      usuario: ['', [Validators.required]],
     },
     {
-      Validators,
+      Validators
     }
   );
 
   constructor(
-    private productoService: ProductoService,
-    private categoriaService: CategoriaService,
-    private unidadMedidaService: UnidadMedidaService,
+    private movimientoAlmacenService: Movimiento_almacenService,
+    private tipoDocumentoService: TipoDocumentoService,
     private proveedorService: ProveedorService,
+    private clienteService: ClienteService,
+    private tipoMovimientoService: TipoMovimientoService,
+    private usuarioService: UsuarioService,
     private fb: FormBuilder,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+
     this.dtOptions = {
       destroy: true,
       pageLength: 10,
@@ -61,22 +72,41 @@ export class ProductosComponent implements OnInit, OnDestroy {
       info: true,
       language: { url: '//cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json' },
       dom: 'Bfrtip',
-      buttons: ['colvis', 'copy', 'print', 'excel'],
+      //buttons: ['colvis', 'copy', 'print', 'excel'],
     };
-    this.obtenerProducto();
+    this.obtenerMovimientos();
   }
 
-  obtenerProducto() {
-    this.productoService.listarProductos().subscribe((dato: any) => {
-      this.productos = dato;
+  obtenerMovimientos() {
+    this.movimientoAlmacenService.listar().subscribe((dato: any) => {
+      this.movimientos = dato;
       this.dtTrigger.next(this.dtOptions);
     });
   }
 
-  llenarSelects(){
-    this.obtenerProveedor(),
-    this.obtenerCategorias(),
-    this.obtenerUnidadMedidas()
+  llenarSelects() {
+    this.obtenerTipoMov(),
+      this.obtenerTipoDoc(),
+      this.obtenerUsuarios(),
+      this.obtenerCliente(),
+      this.obtenerProveedor();
+  }
+  obtenerTipoMov() {
+    this.tipoMovimientoService.listar().subscribe((dato: any) => {
+      this.tipoMov = dato;
+    });
+  }
+
+  obtenerTipoDoc() {
+    this.tipoDocumentoService.listar().subscribe((dato: any) => {
+      this.tipoDoc = dato;
+    });
+  }
+
+  obtenerUsuarios() {
+    this.usuarioService.obtenerUsuarios().subscribe((dato: any) => {
+      this.usuarios = dato;
+    });
   }
   obtenerProveedor() {
     this.proveedorService.obtenerProveedor().subscribe((dato: any) => {
@@ -84,18 +114,11 @@ export class ProductosComponent implements OnInit, OnDestroy {
     });
   }
 
-  obtenerCategorias() {
-    this.categoriaService.obtenerCategorias().subscribe((dato: any) => {
-      this.categoria = dato;
+  obtenerCliente() {
+    this.clienteService.obtenerCliente().subscribe((dato: any) => {
+      this.clientes = dato;
     });
   }
-
-  obtenerUnidadMedidas() {
-    this.unidadMedidaService.obtenerUnidadMedidas().subscribe((dato: any) => {
-      this.unidadMedidas = dato;
-    });
-  }
-
   get estados() {
     return this.registerForm.get('est');
   }
@@ -110,20 +133,21 @@ export class ProductosComponent implements OnInit, OnDestroy {
     this.dtTrigger.unsubscribe();
   }
 
-  crearProductos() {
+  crearMovimiento() {
     if (this.registerForm.invalid) {
       return;
     }
-    console.log(this.registerForm.value);
+
+    console.log(this.registerForm.value)
     //Realizar posteo
-    this.productoService.newProducto(this.registerForm.value).subscribe(
+    this.movimientoAlmacenService.agregar(this.registerForm.value).subscribe(
       (res) => {
         Swal.fire({
           icon: 'success',
           title: 'Exito',
-          text: 'Producto creado correctamente',
+          text: 'Movimiento creado correctamente',
           showConfirmButton: true,
-        }).then((result) => {   
+        }).then((result) => {
           location.reload();
         });
       },
@@ -132,7 +156,6 @@ export class ProductosComponent implements OnInit, OnDestroy {
         Swal.fire('Error', errorServer.message, 'error');
       }
     );
-    console.log(this.registerForm.value);
   }
 
   // llenarForm(id: number) {
@@ -202,35 +225,58 @@ export class ProductosComponent implements OnInit, OnDestroy {
   //     });
   // }
 
-  get categorias() {
-    return this.registerForm.get('id_categoria');
+  get usuarioGet() {
+    return this.registerForm.get('usuario');
   }
 
-  categoriaSeleccionada(evento) {
-    this.categorias.setValue(evento.target.value, {
+  usuarioSeleccionado(evento) {
+    this.usuarioGet.setValue(evento.target.value, {
       onlySelf: true,
     });
   }
 
-  get unidadMedida() {
-    return this.registerForm.get('id_unidad_medida');
+  get tipoDocGet() {
+    return this.registerForm.get('tipo_documento');
   }
 
-  unidadMedidaSeleccionada(evento) {
-    this.unidadMedida.setValue(evento.target.value, {
+  tipoDocSeleccionado(evento) {
+    this.tipoDocGet.setValue(evento.target.value, {
       onlySelf: true,
     });
+  }
+
+  get tipoMovGet() {
+    return this.registerForm.get('tipo_movimiento');
+  }
+  tipoMovSeleccionado(evento) {
+    this.tipoMovGet.setValue(evento.target.value, {
+      onlySelf: true,
+    });
+    this.tipoMovimientoService
+      .buscarXid(this.registerForm.get('tipo_movimiento').value)
+      .subscribe((dato: any) => {
+        this.movSelec = dato; 
+      });
+      console.log(this.movSelec);
   }
 
   get proveedorGet() {
-    return this.registerForm.get('id_proveedor');
+    return this.registerForm.get('proveedor');
   }
-  proveedorSeleccionada(evento){
+  proveedorSeleccionado(evento) {
     this.proveedorGet.setValue(evento.target.value, {
       onlySelf: true,
     });
   }
-  
+
+  get clienteGet() {
+    return this.registerForm.get('cliente');
+  }
+  clienteSeleccionado(evento) {
+    this.clienteGet.setValue(evento.target.value, {
+      onlySelf: true,
+    });
+  }
 
   campoNoValido(campo: string): boolean {
     if (this.registerForm.get(campo).invalid && this.formSubmitted) {
@@ -254,20 +300,15 @@ export class ProductosComponent implements OnInit, OnDestroy {
       confirmButtonText: 'Confirmar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.productoService.actualizaEstadoProducto(id, dato).subscribe(
+        this.movimientoAlmacenService.cambioEstado(id, dato).subscribe(
           (res) => {
             Swal.fire({
               icon: 'success',
-              title: 'Producto Actualizado correctamente',
+              title: 'Movimiento Actualizado correctamente',
               confirmButtonText: 'Ok',
             }).then((result) => {
               if (result) {
-                this.productoService
-                  .listarProductos()
-                  .subscribe((dato: any) => {
-                    this.productos = dato;
-                  });
-                //location.reload();
+                location.reload();
                 //this.ngOnDestroy();
               }
             });

@@ -26,6 +26,7 @@
               <table
                 datatable
                 [dtOptions]="dtOptions"
+                [dtTrigger]="dtTrigger"
                 class="row-border hover"
               >
                 <thead style="background-color: #343a40; color: white">
@@ -51,11 +52,11 @@
                         <i class="fas fa-trash-alt"></i>
                       </button>
                       
-                      <button *ngIf="categoria.estado == 'Activo'" class="btn btn-success btn-xs ml-2" (click)="cambiaEstado(categoria.id,categoria.estado)">
+                      <button *ngIf="categoria.estado == 'Activo' " class="btn btn-success btn-xs ml-2" (click)="cambiaEstado(categoria.id,categoria.estado)">
                           <i class="fas fa-toggle-on"></i>
                         </button>
   
-                        <button *ngIf="categoria.estado != 'Activo'" class="btn btn-secondary btn-xs ml-2" (click)="cambiaEstado(categoria.id,categoria.estado)">
+                        <button *ngIf="categoria.estado != 'Activo' " class="btn btn-secondary btn-xs ml-2" (click)="cambiaEstado(categoria.id,categoria.estado)">
                           <i class="fas fa-toggle-off"></i>
                         </button>
                     </td>

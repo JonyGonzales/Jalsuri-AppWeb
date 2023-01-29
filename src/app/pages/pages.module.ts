@@ -13,6 +13,8 @@ import { ProveedorComponent } from './proveedor/proveedor.component';
 import { InsumosComponent } from './insumos/insumos.component';
 import { MaterialModule } from 'material.module';
 import { TableWrappedExample, WrapperTable } from './table-wrapped-example/table-wrapped-example.component';
+import { MovimientosAlmacenComponent } from './movimientos-almacen/movimientos-almacen.component';
+import { ClienteComponent } from './cliente/cliente.component';
 
 @NgModule({
   imports: [
@@ -25,7 +27,7 @@ import { TableWrappedExample, WrapperTable } from './table-wrapped-example/table
     ReactiveFormsModule,
     MaterialModule
   ],
-  declarations: [PagesComponent, UsuariosComponent, CategoriaComponent, ProductosComponent, ProveedorComponent, InsumosComponent, TableWrappedExample,WrapperTable]
+  declarations: [PagesComponent, UsuariosComponent, CategoriaComponent, ProductosComponent, ProveedorComponent, InsumosComponent, TableWrappedExample,WrapperTable, MovimientosAlmacenComponent, ClienteComponent]
   ,
   providers: [],
   bootstrap: [InsumosComponent],

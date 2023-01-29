@@ -5,34 +5,34 @@ import { CambioEstado } from 'src/app/interfaces/cambio-estado.interface';
 import { environment } from 'src/environments/environment.prod';
 import { EditForm } from '../interfaces/edit-form-interface';
 import { RegisterForm } from '../interfaces/register-form.interface';
-import { Proveedor } from '../model/proveedor';
+import { Cliente } from '../model/cliente';
 
-const URLSUBFIJO = '/proveedores'
+const URLSUBFIJO = '/clientes'
 const URL = environment.URLBASE + URLSUBFIJO
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProveedorService {constructor(private http: HttpClient) {}
+export class ClienteService {constructor(private http: HttpClient) {}
 
-newProveedor(formData: RegisterForm) {
+newCliente(formData: RegisterForm) {
   return this.http.post(`${URL}`, formData, {
     responseType: 'text',
   });
 }
 
 // Este metodo nos sirve para obtener las Productos
-obtenerProveedor(): Observable<Proveedor[]> {
-  return this.http.get<Proveedor[]>(`${URL}`);
+obtenerCliente(): Observable<Cliente[]> {
+  return this.http.get<Cliente[]>(`${URL}`);
 }
-deleteProveedor(id: number) {
+deleteCliente(id: number) {
   //     let headers = new HttpHeaders({
   //       'token': this.token
   //     });
   return this.http.delete(`${URL}/${id}`);
 }
 
-obtenerIdProveedor(id: number) {
+obtenerIdCliente(id: number) {
   //     let headers = new HttpHeaders({
   //       'token': this.token
   //     });
@@ -40,7 +40,7 @@ obtenerIdProveedor(id: number) {
   return this.http.get(`${URL}/${id}`);
 }
 
-editarProveedor(id: number, editData: EditForm) {
+editarCliente(id: number, editData: EditForm) {
   //     let headers = new HttpHeaders({
   //       'token': this.token
   //     });
@@ -48,7 +48,7 @@ editarProveedor(id: number, editData: EditForm) {
   return this.http.put(`${URL}/${id}`, editData);
 }
 
-actualizaEstadoProveedor(id: number, editData: CambioEstado) {
+actualizaEstadoCliente(id: number, editData: CambioEstado) {
   return this.http.put(`${URL}/cambiaEstado/${id}`, editData);
 }
 }

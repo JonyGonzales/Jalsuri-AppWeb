@@ -15,9 +15,10 @@ declare var $: any;
   styleUrls: ['./categoria.component.css']
 })
 export class CategoriaComponent implements OnInit, OnDestroy{
-  dtOptions: any = {};
+
   categorias: Categoria[] = [];
-  dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTables.Settings = {};
+  dtTrigger = new Subject();
 
   formSubmitted = false;
   Estados: any = ['Activo', 'Inactivo'];
@@ -44,12 +45,11 @@ export class CategoriaComponent implements OnInit, OnDestroy{
       responsive: true,
       info: true,
       language: { url: '//cdn.datatables.net/plug-ins/1.13.1/i18n/es-MX.json' },
-      dom: 'Bfrtip',
-      buttons: ['colvis', 'copy', 'print', 'excel']
-      
-    };  
-
+      dom: 'Bfrtip'
+    };   
     this.obtenerCategoria();
+ 
+    
   }
 
   obtenerCategoria() {
@@ -129,8 +129,10 @@ export class CategoriaComponent implements OnInit, OnDestroy{
             confirmButtonText: 'Ok',
           }).then((result) => {
             if (result) {
+              this.ngOnDestroy();
+              this.obtenerCategoria();
               localStorage.removeItem('idCat');
-              location.reload();
+              //location.reload();
             }
           });
         },
@@ -190,6 +192,7 @@ export class CategoriaComponent implements OnInit, OnDestroy{
         confirmButtonText: 'Confirmar',
       }).then((result) => {
         if (result.isConfirmed) {
+          console.log(dato)
           this.categoriaService.actualizaEstadoCategoria(id, dato).subscribe(
             (res) => {
               Swal.fire({
@@ -198,8 +201,8 @@ export class CategoriaComponent implements OnInit, OnDestroy{
                 confirmButtonText: 'Ok',
               }).then((result) => {
                 if (result) {
-                  //this.categoriaService.obtenerCategorias().subscribe((dato: any) => {this.categorias = dato;});
-                  location.reload();
+                  this.categoriaService.obtenerCategorias().subscribe((dato: any) => {this.categorias = dato;});
+                  //location.reload();
                   //this.ngOnDestroy();
                 }
               });
