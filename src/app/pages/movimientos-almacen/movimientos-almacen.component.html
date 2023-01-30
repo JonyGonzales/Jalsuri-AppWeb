@@ -6,7 +6,8 @@
           <div class="card-header">
             <h3 class="card-title">Lista de Movimiento</h3>
             <br />
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarMovimiento" (click)="llenarSelects()">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarMovimiento"
+              (click)="llenarSelects()">
               <i class="fas fa-prescription-bottle-alt"></i> Agregar
             </button>
           </div>
@@ -75,16 +76,18 @@
         <div class="modal-body">
           <form (ngSubmit)="crearMovimiento()" [formGroup]="registerForm" autocomplete="off">
             <div class="form-group mb-3">
-              <select class="form-control" id="tipMOV" formControlName="tipo_movimiento" (change)="tipoMovSeleccionado($event)" >
+              <select class="form-control" id="tipMOV" formControlName="tipo_movimiento"
+                (change)="tipoMovSeleccionado($event)">
                 <option value="">Seleccione Movimiento</option>
-                <option *ngFor="let m of tipoMov" value="{{ m.id }}" id="{{m.tipo}}">
+                <option *ngFor="let m of tipoMov" value="{{ m.id }}" id="{{ m.tipo }}">
                   {{ m.nombre }}
                 </option>
               </select>
             </div>
-
-
-
+            <p class="alert alert-danger"
+              *ngIf="registerForm.get('tipo_movimiento')?.touched && registerForm.get('tipo_movimiento')?.errors?.['required']">
+              El tipo de Movimiento es obligatorio
+            </p>
 
             <div class="form-group mb-3">
               <select class="form-control" formControlName="tipo_documento" (change)="tipoDocSeleccionado($event)">
@@ -94,26 +97,25 @@
                 </option>
               </select>
             </div>
-
-
+            <p class="alert alert-danger"
+              *ngIf="registerForm.get('tipo_documento')?.touched && registerForm.get('tipo_documento')?.errors?.['required']">
+              El tipo de documento es obligatorio
+            </p>
 
             <div class="input-group mb-3">
               <input type="text" class="form-control" placeholder="Numero de Documento"
-                formControlName="numero_documento"/>
+                formControlName="numero_documento" />
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-text-height" style="color: rgb(48, 37, 37)"></span>
                 </div>
               </div>
             </div>
+            <p class="alert alert-danger"
+              *ngIf="registerForm.get('numero_documento')?.touched && registerForm.get('numero_documento')?.errors?.['required']">
+              El número de documento es obligatorio
+            </p>
 
-            <div class="col text-danger">
-              <p *ngIf="campoNoValido('numero_documento')">El número de documento es obligatorio</p>
-            </div>
-
-
-
-            
             <div class="form-group mb-3">
               <select class="form-control" formControlName="proveedor" (change)="proveedorSeleccionado($event)">
                 <option value="">Seleccione un Proveedor</option>
@@ -123,8 +125,6 @@
               </select>
             </div>
 
-
- 
             <div class="form-group mb-3">
               <select class="form-control" formControlName="cliente" (change)="clienteSeleccionado($event)">
                 <option value="">Seleccione un Cliente</option>
@@ -142,6 +142,10 @@
                 </option>
               </select>
             </div>
+            <p class="alert alert-danger"
+              *ngIf="registerForm.get('usuario')?.touched && registerForm.get('usuario')?.errors?.['required']">
+              El Usuario es obligatorio
+            </p>
 
             <div class="input-group mb-3">
               <input type="text" class="form-control" placeholder="Observaciones" formControlName="observaciones" />
@@ -155,16 +159,22 @@
             <div class="row">
               <div class="col-8">
                 <div class="col text-danger">
-                  <p *ngIf="campoNoValido('tipo_movimiento')">El tipo de movimiento es obligatorio</p>
-                  <p *ngIf="campoNoValido('tipo_documento')">El tipo de documento es obligatorio</p>
-                  <p *ngIf="campoNoValido('usuario')">El usuario es obligatoria</p>
+                  <p *ngIf="campoNoValido('tipo_movimiento')">
+                    El tipo de movimiento es obligatorio
+                  </p>
+                  <p *ngIf="campoNoValido('tipo_documento')"></p>
+                  <p *ngIf="campoNoValido('usuario')">
+                    El usuario es obligatoria
+                  </p>
                 </div>
               </div>
               <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                   Close
                 </button>
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button routerLink="../../dashboard/movimientos" type="submit" class="btn btn-primary">
+                  Guardar
+                </button>
               </div>
             </div>
           </form>

@@ -89,7 +89,7 @@ export class CategoriaComponent implements OnInit, OnDestroy{
           text: 'Categoria creado correctamente',
           showConfirmButton: true,
         }).then((result) => {
-
+          
           $('#agregarCategoria').modal('toggle');
           $('#agregarCategoria').modal('hide');
         });
@@ -103,7 +103,7 @@ export class CategoriaComponent implements OnInit, OnDestroy{
 
   llenarForm(id: number) {
     this.categoriaService.obtenerIdCategoria(id).subscribe((res) => {
-      this.registerForm.setValue({
+      this.registerForm.patchValue({
         nombre: res['nombre']
         });
 
