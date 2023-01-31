@@ -53,6 +53,7 @@ export class ProductosComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.llenarSelects();
     this.dtOptions = {
       destroy: true,
       pageLength: 10,
@@ -135,72 +136,77 @@ export class ProductosComponent implements OnInit, OnDestroy {
     console.log(this.registerForm.value);
   }
 
-  // llenarForm(id: number) {
-  //   this.productoService.obtenerIdProducto(id).subscribe((res) => {
-  //     this.registerForm.setValue({
-  //       nombre: res['nombre']
-  //       });
+  llenarForm(id: number) {
+    this.productoService.buscarXid(id).subscribe((res) => {
+      this.registerForm.patchValue({
+        nombre: res['nombre'],
+        stock: res['stock'],
+        precio: res['precio'],
+        id_categoria: this.categoriaService.obtenerIdCategoria(res['id_categoria']),
+        id_unidad_medida: res['id_unidad_medida'],
+        id_proveedor: res['id_proveedor'],
+        });
 
-  //     $('#editarProducto').modal('toggle');
-  //     $('#editarProducto').modal('show');
+      $('#editarProducto').modal('toggle');
+      $('#editarProducto').modal('show');
 
-  //     localStorage.setItem('idCat', res['id']);
-  //   });
-  // }
+      localStorage.setItem('idPro', res['id']);
+    });
+  }
 
-  // editarProducto() {
-  //   this.productoService
-  //     .editarProducto(
-  //       parseInt(localStorage.getItem('idCat')),
-  //       this.registerForm.value
-  //     )
-  //     .subscribe(
-  //       (res) => {
-  //         Swal.fire({
-  //           icon: 'success',
-  //           title: 'Exito',
-  //           text: 'El producto se actualizo correctamente',
-  //           confirmButtonText: 'Ok',
-  //         }).then((result) => {
-  //           if (result) {
-  //             localStorage.removeItem('idCat');
-  //             location.reload();
-  //           }
-  //         });
-  //       },
-  //       (err) => {
-  //         Swal.fire('Error', err.error.message, 'error');
-  //       }
-  //     );
-  // }
+  editarProductos() {
+    this.productoService
+      .editar(
+        parseInt(localStorage.getItem('idPro')),
+        this.registerForm.value
+      )
+      .subscribe(
+        (res) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Exito',
+            text: 'El producto se actualizo correctamente',
+            confirmButtonText: 'Ok',
+          }).then((result) => {
+            if (result) {
+              localStorage.removeItem('idPro');
+              location.reload();
+            }
+          });
+        },
+        (err) => {
+          Swal.fire('Error', err.error.message, 'error');
+        }
+      );
+  }
 
-  // eliminarProducto(id: number) {
-  //     Swal.fire({
-  //       icon: 'question',
-  //       title: 'Desea eliminar este producto?',
-  //       showCancelButton: true,
-  //       confirmButtonText: 'Confirmar',
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         this.productoService.deleteProducto(id).subscribe(
-  //           (res: any) => {
-  //             Swal.fire({
-  //               icon: 'success',
-  //               title: 'Producto eliminado correctamente',
-  //               confirmButtonText: 'Ok',
-  //             }).then((result) => {
-  //               if (result) {
-  //                 location.reload();
-  //               }
-  //             });
-  //           },
-  //           (err) => {
-  //             Swal.fire('Error', err.error.message, 'error');
-  //           }
-  //         );
-  //       }
-  //     });
-  // }
+  eliminar(id: number) {
+      Swal.fire({
+        icon: 'question',
+        title: 'Desea eliminar este producto?',
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.productoService.eliminar(id).subscribe(
+            (res: any) => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Producto eliminado correctamente',
+                confirmButtonText: 'Ok',
+              }).then((result) => {
+                if (result) {
+                  location.reload();
+                }
+              });
+            },
+            (err) => {
+              Swal.fire('Error', err.error.message, 'error');
+            }
+          );
+        }
+      });
+  }
 
   get categorias() {
     return this.registerForm.get('id_categoria');
@@ -241,11 +247,12 @@ export class ProductosComponent implements OnInit, OnDestroy {
   }
 
   cambiaEstado(id: number, est: String) {
+    var dato = null;
     if (est == 'Inactivo') {
-      var dato = { estado: 'Activo' };
+      dato = { estado: 'Activo' };
     }
     if (est == 'Activo') {
-      var dato = { estado: 'Inactivo' };
+      dato = { estado: 'Inactivo' };
     }
     Swal.fire({
       icon: 'question',
@@ -254,7 +261,8 @@ export class ProductosComponent implements OnInit, OnDestroy {
       confirmButtonText: 'Confirmar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.productoService.actualizaEstadoProducto(id, dato).subscribe(
+        console.log(dato);
+        this.productoService.actualizaEstadoProducto(id, dato.value).subscribe(
           (res) => {
             Swal.fire({
               icon: 'success',
@@ -262,19 +270,17 @@ export class ProductosComponent implements OnInit, OnDestroy {
               confirmButtonText: 'Ok',
             }).then((result) => {
               if (result) {
-                this.productoService
-                  .listarProductos()
-                  .subscribe((dato: any) => {
-                    this.productos = dato;
-                  });
-                //location.reload();
+                location.reload();
                 //this.ngOnDestroy();
               }
+              console.log(res)
             });
+
           },
           (err) => {
             Swal.fire('Error', err.error.message, 'error');
           }
+          
         );
       }
     });

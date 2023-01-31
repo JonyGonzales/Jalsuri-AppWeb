@@ -11,7 +11,6 @@
                 class="btn btn-primary"
                 data-toggle="modal"
                 data-target="#agregarProducto"
-                (click)="llenarSelects()"
               >
                 <i class="fas fa-prescription-bottle-alt"></i> Agregar
               </button>
@@ -52,13 +51,12 @@
                     <td>{{ producto.proveedor.nombre }}</td>
                     <td>{{ producto.estado }}</td>
                     <td>
-                      <!-- <button class="btn btn-warning btn-xs mr-2"(click)="llenarForm(producto.id)"> -->
-                        <button class="btn btn-warning btn-xs mr-2">
+
+                        <button class="btn btn-warning btn-xs mr-2" (click)="llenarForm(producto.id)">
                         <i class="fas fa-pencil-alt"></i>
                       </button>
   
-                      <button class="btn btn-danger btn-xs">
-                        <!-- <button class="btn btn-danger btn-xs" (click)="eliminarCategoria(producto.id)"> -->
+                        <button class="btn btn-danger btn-xs" (click)="eliminar(producto.id)">
                         <i class="fas fa-trash-alt"></i>
                       </button>
                       
@@ -209,5 +207,135 @@
           <!-- /.modal-content -->
         </div>
     </div>
+
+        <!-- /Modal Agregar Productos -->
+        <div class="modal fade" id="editarProducto">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Editar Productos</h4>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form
+                  (ngSubmit)="editarProductos()"
+                  [formGroup]="registerForm"
+                  autocomplete="off"
+                >
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Nombre de Producto"
+                      formControlName="nombre"
+                    />
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span
+                          class="fas fa-bottle"
+                          style="color: rgb(48, 37, 37)"
+                        ></span>
+                      </div>
+                    </div>
+                  </div>      
+                  
+                  <div class="input-group mb-3">
+                      <input
+                        type="number"
+                        class="form-control"
+                        placeholder="Stock"
+                        formControlName="stock"
+                      />
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <span
+                            class="fas fa-cube"
+                            style="color: rgb(48, 37, 37)"
+                          ></span>
+                        </div>
+                      </div>
+                    </div>  
+  
+                    <div class="input-group mb-3">
+                      <input
+                        type="number"
+                        class="form-control"
+                        placeholder="Precio"
+                        formControlName="precio"
+                      />
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <span
+                            class="fas fa-money"
+                            style="color: rgb(48, 37, 37)"
+                          ></span>
+                        </div>
+                      </div>
+                    </div>  
+                    <div class="form-group mb-3">
+                      <select
+                        class="form-control"
+                        formControlName="id_proveedor"
+                        (change)="proveedorSeleccionada($event)"
+                      >
+                      <option value="">Seleccione un Proveedor</option>
+                        <option *ngFor="let p of proveedores" value={{p.id}} >{{ p.nombre }}</option>
+                      </select>
+                    </div>    
+  
+  
+                    <div class="form-group mb-3">
+                      <select
+                        class="form-control"
+                        formControlName="id_categoria"
+                        (change)="categoriaSeleccionada($event)"
+                      >
+                      <option value="">Seleccione una Categoria</option>
+                        <option *ngFor="let c of categoria" value={{c.id}} >{{ c.nombre }}</option>
+                      </select>
+                    </div>    
+  
+                    <div class="form-group mb-3">
+                      <select
+                        class="form-control"
+                        formControlName="id_unidad_medida"
+                        (change)="unidadMedidaSeleccionada($event)"
+                      >
+                      <option value="">Seleccione la Unidad de Medida</option>
+                        <option *ngFor="let i of unidadMedidas" value={{i.id}} >{{ i.nombre }}</option>
+                      </select>
+                    </div> 
+  
+  
+                  <div class="row">
+                    <div class="col-8">
+                      <div class="col text-danger">
+                        <p *ngIf="campoNoValido('nombre')">El nombre es obligatorio</p>
+                      </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                      <button
+                        type="button"
+                        class="btn btn-default"
+                        data-dismiss="modal">
+                        Close
+                      </button>
+                      <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+      </div>
+
   </section>
   

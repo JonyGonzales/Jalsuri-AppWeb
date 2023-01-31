@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/jalsuri-app-2.1",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

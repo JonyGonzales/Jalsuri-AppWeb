@@ -8,7 +8,6 @@ import { CategoriaComponent } from './categoria/categoria.component';
 import { ProductosComponent } from './productos/productos.component';
 import { ProveedorComponent } from './proveedor/proveedor.component';
 import { InsumosComponent } from './insumos/insumos.component';
-import { TableWrappedExample } from './table-wrapped-example/table-wrapped-example.component';
 import { MovimientosAlmacenComponent } from './movimientos-almacen/movimientos-almacen.component';
 import { ClienteComponent } from './cliente/cliente.component';
 
@@ -59,11 +58,6 @@ import { ClienteComponent } from './cliente/cliente.component';
             path: 'insumos',
             component: InsumosComponent,
             data: { titulo: 'Insumos' },
-          },
-          {
-            path: 'empleados',
-            component: TableWrappedExample,
-            data: { titulo: 'Prueba' },
           },
           {
             path: 'movimientos',

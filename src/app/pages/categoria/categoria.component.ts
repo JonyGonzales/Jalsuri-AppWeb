@@ -89,7 +89,7 @@ export class CategoriaComponent implements OnInit, OnDestroy{
           text: 'Categoria creado correctamente',
           showConfirmButton: true,
         }).then((result) => {
-          
+
           $('#agregarCategoria').modal('toggle');
           $('#agregarCategoria').modal('hide');
         });
@@ -129,10 +129,10 @@ export class CategoriaComponent implements OnInit, OnDestroy{
             confirmButtonText: 'Ok',
           }).then((result) => {
             if (result) {
-              this.ngOnDestroy();
-              this.obtenerCategoria();
-              localStorage.removeItem('idCat');
-              //location.reload();
+              //this.ngOnDestroy();
+              //this.obtenerCategoria();
+              //localStorage.removeItem('idCat');
+              location.reload();
             }
           });
         },

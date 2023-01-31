@@ -25,7 +25,22 @@ export class ProductoService {
     return this.http.post(`${URL}`, producto, { responseType: 'text' });
   }
 
+  editar(id: number, editData: RegisterForm) {
+    return this.http.put(`${URL}/${id}`, editData);
+  }
+
+  // Cambia de Estado de Productos
   actualizaEstadoProducto(id: number, editData: CambioEstado) {
     return this.http.put(`${URL}/cambiaEstado/${id}`, editData);
+  }
+  
+  eliminar(id: number) {
+    return this.http.delete(`${URL}/${id}`);
+  }
+
+
+  // Buscar por Id
+  buscarXid(id:number): Observable<Producto[]> {
+    return this.http.get<Producto[]>(`${URL}/${id}`);
   }
 }
