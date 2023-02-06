@@ -47,8 +47,23 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 
   constructor(
     private usuarioService: UsuarioService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {}
+  public showModal: boolean = false;
+  public toggleModal(): void {
+    this.showModal = !this.showModal;
+  }
+
+  reloadComponent() {
+    this.toggleModal()
+    
+    this.router
+      .navigateByUrl('./dashboard/usuarios', { skipLocationChange: true })
+      .then(() => {
+        this.router.navigate(['./dashboard/usuarios']);
+      });
+  }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -90,9 +105,9 @@ export class UsuariosComponent implements OnInit, OnDestroy {
           text: 'Usuario creado correctamente',
           showConfirmButton: true,
         }).then((result) => {
-          location.reload();
+          //location.reload();
           //this.usuarioService.obtenerUsuarios().subscribe((dato: any) => {this.usuarios = dato;});
-
+          this.reloadComponent()
         });
       },
       (err) => {
@@ -112,6 +127,8 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 
     localStorage.setItem('userId', idUser);
     this.formSubmitted = false;
+
+    console.log(idUser)
 
   }
 
@@ -152,8 +169,9 @@ export class UsuariosComponent implements OnInit, OnDestroy {
             if (result) {
               localStorage.removeItem('idUser');
               localStorage.removeItem('userId');
-              location.reload();
+              //location.reload();
               //this.usuarioService.obtenerUsuarios().subscribe((dato: any) => {this.usuarios = dato;});
+              this.reloadComponent()
             }
           });
         },
@@ -164,10 +182,11 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   }
 
   changePassword() {
-    this.formSubmitted = true;
+    this.formSubmitted = false;
     if (this.cambioContrasenaForm.invalid) {
       return;
     }
+    console.log(this.cambioContrasenaForm.value)
      this.usuarioService.cambioPassword(parseInt(localStorage.getItem('userId')),this.cambioContrasenaForm.value).subscribe((res) => {
          Swal.fire({
            icon: 'success',
@@ -175,8 +194,9 @@ export class UsuariosComponent implements OnInit, OnDestroy {
            confirmButtonText: 'Ok',
          }).then((result) => {
            if (result) {
-             //location.reload();
+             location.reload();
              localStorage.removeItem('userId');
+             this.reloadComponent();
            }
          });
         },
@@ -206,7 +226,8 @@ export class UsuariosComponent implements OnInit, OnDestroy {
                 confirmButtonText: 'Ok',
               }).then((result) => {
                 if (result) {
-                  location.reload();
+                  //location.reload();
+                  this.reloadComponent();
                 }
               });
             },
@@ -306,9 +327,12 @@ export class UsuariosComponent implements OnInit, OnDestroy {
                 confirmButtonText: 'Ok',
               }).then((result) => {
                 if (result) {
-                  //this.usuarioService.obtenerUsuarios().subscribe((dato: any) => {this.usuarios = dato;});
-                  location.reload();
                   //this.ngOnDestroy();
+                  //this.usuarioService.obtenerUsuarios().subscribe((dato: any) => {this.usuarios = dato;});
+                  //location.reload();
+
+                  this.reloadComponent()                
+                  
                 }
               });
             },

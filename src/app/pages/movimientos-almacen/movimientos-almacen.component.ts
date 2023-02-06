@@ -30,10 +30,29 @@ export class MovimientosAlmacenComponent implements OnDestroy, OnInit {
   usuarios: Usuario[] = [];
   proveedores: Proveedor[] = [];
   clientes: Cliente[] = [];
-
   movSelec: Tipo_movimiento[] = [];
 
   formSubmitted = false;
+
+  selectedId = 0 ;
+  tiposeleccionado:string ;
+
+  reloadComponent() {
+    this.router
+      .navigateByUrl('./dashboard/movimientos', { skipLocationChange: true })
+      .then(() => {
+        this.router.navigate(['./dashboard/movimientos']);
+      });
+  }
+
+  datoTipoMov() {
+    const selectedObject = this.tipoMov.filter(
+      (obj) => obj.id === this.selectedId
+    )[0];
+    const val =selectedObject.tipo;
+    //const val =JSON.stringify(selectedObject.tipo);
+    this.tiposeleccionado =val.toString();
+  }
 
   // con estos Valores enviamos al Web Service
   public registerForm = this.fb.group(
@@ -47,7 +66,7 @@ export class MovimientosAlmacenComponent implements OnDestroy, OnInit {
       usuario: ['', [Validators.required]],
     },
     {
-      Validators
+      Validators,
     }
   );
 
@@ -62,8 +81,9 @@ export class MovimientosAlmacenComponent implements OnDestroy, OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
 
+  ngOnInit(): void {
+    this.llenarSelects()
     this.dtOptions = {
       destroy: true,
       pageLength: 10,
@@ -138,7 +158,7 @@ export class MovimientosAlmacenComponent implements OnDestroy, OnInit {
       return;
     }
 
-    console.log(this.registerForm.value)
+    console.log(this.registerForm.value);
     //Realizar posteo
     this.movimientoAlmacenService.agregar(this.registerForm.value).subscribe(
       (res) => {
@@ -148,7 +168,8 @@ export class MovimientosAlmacenComponent implements OnDestroy, OnInit {
           text: 'Movimiento creado correctamente',
           showConfirmButton: true,
         }).then((result) => {
-          location.reload();
+          //location.reload();
+          this.reloadComponent();
         });
       },
       (err) => {
@@ -248,16 +269,24 @@ export class MovimientosAlmacenComponent implements OnDestroy, OnInit {
   get tipoMovGet() {
     return this.registerForm.get('tipo_movimiento');
   }
-  tipoMovSeleccionado(evento) {
-    this.tipoMovGet.setValue(evento.target.value, {
+
+  tipoMovSeleccionado(event) {
+    this.tipoMovGet.setValue(event.target.value, {
       onlySelf: true,
     });
-    this.tipoMovimientoService
-      .buscarXid(this.registerForm.get('tipo_movimiento').value)
-      .subscribe((dato: any) => {
-        this.movSelec = dato; 
-      });
-      console.log(this.movSelec);
+    const selectedValueControl = this.registerForm.get('tipo_movimiento');
+      selectedValueControl.setValue(event.target.value);
+      const val = selectedValueControl.value;
+      if (parseInt(val) > 0) {
+      this.selectedId = parseInt(val);
+      this.datoTipoMov();
+      // this.updateContent();
+    } else {
+      console.log('error en el tipo de movimiento');
+    }
+    // this.updateContent();
+    // console.log(this.tiposeleccionado);
+
   }
 
   get proveedorGet() {
@@ -308,8 +337,9 @@ export class MovimientosAlmacenComponent implements OnDestroy, OnInit {
               confirmButtonText: 'Ok',
             }).then((result) => {
               if (result) {
-                location.reload();
+                //location.reload();
                 //this.ngOnDestroy();
+                this.reloadComponent()
               }
             });
           },
