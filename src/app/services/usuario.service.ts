@@ -28,12 +28,12 @@ export class UsuarioService {
   }
 
   login(formData: LoginForm) {
-    return this.http.post(`${environment.URLBASE}/login`, formData).pipe(
+    return this.http.post(`${URL}/login`, formData).pipe(
       tap((res: any) => {
-        console.log(res);
         //  localStorage.setItem('token',res.token);
-        localStorage.setItem('usuarioId', res.usuario.id);
-        localStorage.setItem('nombre', res.usuario.nombre);
+        localStorage.setItem('usuarioId', res.id);
+        localStorage.setItem('nombre', res.nombre);
+        console.log(res);
       })
     );
   }

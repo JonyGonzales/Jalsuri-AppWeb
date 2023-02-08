@@ -56,8 +56,6 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   }
 
   reloadComponent() {
-    this.toggleModal()
-    
     this.router
       .navigateByUrl('./dashboard/usuarios', { skipLocationChange: true })
       .then(() => {

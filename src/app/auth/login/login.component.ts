@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/dashboard');
       },
       (err) => {
-        Swal.fire('Error', err.error.message, 'error');
+        Swal.fire('Error', err.error?.message + ' Error al Inicial Sesion, Revisar el Email y/o Contraseña', 'error');
       }
     );
   }

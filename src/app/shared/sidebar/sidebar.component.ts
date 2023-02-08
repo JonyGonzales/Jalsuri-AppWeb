@@ -12,6 +12,8 @@ declare var $:any;
 })
 export class SidebarComponent implements OnInit {
   menuItems?:any[];
+  nombre = ""
+
   constructor(private sideBarServices: SidebarService, private router:Router) {
     this.menuItems= this.sideBarServices.menu;
     //console.log(this.menuItems);
@@ -20,11 +22,17 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     $('[data-widget="treeview"]').Treeview('init');
+  this.nombre = localStorage.getItem('nombre')
+
 
   }
 
   logout(){
-  this.router.navigateByUrl('/login'); 
+  this.router.navigateByUrl('/login');
+  localStorage.removeItem('nombre')
+  localStorage.removeItem('nombre')
+  localStorage.removeItem('nombre')
+  localStorage.removeItem('nombre')
   
   }
 

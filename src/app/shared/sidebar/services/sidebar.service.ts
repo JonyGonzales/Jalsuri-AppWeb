@@ -15,14 +15,14 @@ export class SidebarService {
       icono: 'nav-icon fas fa-users',
       submenu: [{ titulo: 'Usuarios', url: 'usuarios', icono: 'fa fa-users' }],
     },
-    {
-      titulo: 'Insumos',
-      icono: 'nav-icon fas fa-boxes',
-      submenu: [
-        { titulo: 'Listado de Insumos', url: 'insumos', icono: 'fa fa-list' },
-        { titulo: 'Agregar Insumos', url: 'add-insumos', icono: 'fa fa-cubes' },
-      ],
-    },
+    // {
+    //   titulo: 'Insumos',
+    //   icono: 'nav-icon fas fa-boxes',
+    //   submenu: [
+    //     { titulo: 'Listado de Insumos', url: 'insumos', icono: 'fa fa-list' },
+    //     { titulo: 'Agregar Insumos', url: 'add-insumos', icono: 'fa fa-cubes' },
+    //   ],
+    // },
     {
       titulo: 'Categorias',
       icono: 'nav-icon fas fa-list',

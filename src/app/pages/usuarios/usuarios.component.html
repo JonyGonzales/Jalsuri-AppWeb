@@ -6,23 +6,13 @@
           <div class="card-header">
             <h3 class="card-title">Lista de Usuarios</h3>
             <br />
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-toggle="modal"
-              data-target="#agregarUsuario"
-            >
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarUsuario">
               <i class="fas fa-user-plus"></i> Agregar
             </button>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table
-              datatable
-              [dtOptions]="dtOptions"
-              [dtTrigger]="dtTrigger"
-              class="row-border hover"
-            >
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
               <thead style="background-color: #343a40; color: white">
                 <tr>
                   <th>#</th>
@@ -41,8 +31,7 @@
                   <td>{{ usuario.nombre }}</td>
                   <td>{{ usuario.email }}</td>
                   <td>
-                    <button class="btn btn-primary btn-xs" (click)="cambiarPass(usuario.id)"
-                    >
+                    <button class="btn btn-primary btn-xs" (click)="cambiarPass(usuario.id)">
                       <i class="fas fa-key"></i> Cambio Password
                     </button>
                   </td>
@@ -50,22 +39,23 @@
                   <td>{{ usuario.area }}</td>
                   <td>{{ usuario.estado }}</td>
                   <td>
-                    <button class="btn btn-warning btn-xs mr-2"
-                    (click)="llenarForm(usuario.id)">
+                    <button class="btn btn-warning btn-xs mr-2" (click)="llenarForm(usuario.id)">
                       <i class="fas fa-pencil-alt"></i>
                     </button>
 
                     <button class="btn btn-danger btn-xs" (click)="eliminarUsuario(usuario.id)">
                       <i class="fas fa-trash-alt"></i>
                     </button>
-                    
-                    <button *ngIf="usuario.estado == 'Activo'" class="btn btn-success btn-xs ml-2" (click)="cambiaEstado(usuario.id,usuario.estado)">
-                        <i class="fas fa-toggle-on"></i>
-                      </button>
 
-                      <button *ngIf="usuario.estado != 'Activo'" class="btn btn-secondary btn-xs ml-2" (click)="cambiaEstado(usuario.id,usuario.estado)">
-                        <i class="fas fa-toggle-off"></i>
-                      </button>
+                    <button *ngIf="usuario.estado == 'Activo'" class="btn btn-success btn-xs ml-2"
+                      (click)="cambiaEstado(usuario.id, usuario.estado)">
+                      <i class="fas fa-toggle-on"></i>
+                    </button>
+
+                    <button *ngIf="usuario.estado != 'Activo'" class="btn btn-secondary btn-xs ml-2"
+                      (click)="cambiaEstado(usuario.id, usuario.estado)">
+                      <i class="fas fa-toggle-off"></i>
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -84,109 +74,56 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Agregar Usuarios</h4>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form
-            (ngSubmit)="crearUsuarios()"
-            [formGroup]="registerForm"
-            autocomplete="off"
-          >
+          <form (ngSubmit)="crearUsuarios()" [formGroup]="registerForm" autocomplete="off">
             <div class="input-group mb-3">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Full name"
-                formControlName="nombre"
-              />
+              <input type="text" class="form-control" placeholder="Full name" formControlName="nombre" />
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span
-                    class="fas fa-user"
-                    style="color: rgb(48, 37, 37)"
-                  ></span>
+                  <span class="fas fa-user" style="color: rgb(48, 37, 37)"></span>
                 </div>
               </div>
             </div>
             <div class="input-group mb-3">
-              <input
-                type="email"
-                class="form-control"
-                placeholder="Email"
-                formControlName="email"
-              />
+              <input type="email" class="form-control" placeholder="Email" formControlName="email" />
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span
-                    class="fas fa-envelope"
-                    style="color: rgb(48, 37, 37)"
-                  ></span>
+                  <span class="fas fa-envelope" style="color: rgb(48, 37, 37)"></span>
                 </div>
               </div>
             </div>
 
             <div class="input-group mb-3">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Area"
-                formControlName="area"
-              />
+              <input type="text" class="form-control" placeholder="Area" formControlName="area" />
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span
-                    class="fas fa-user"
-                    style="color: rgb(48, 37, 37)"
-                  ></span>
+                  <span class="fas fa-user-friends" style="color: rgb(48, 37, 37)"></span>
                 </div>
               </div>
             </div>
 
             <div class="input-group mb-3">
-              <input
-                type="password"
-                class="form-control"
-                placeholder="Password"
-                formControlName="password"
-              />
+              <input type="password" class="form-control" placeholder="Password" formControlName="password" />
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span
-                    class="fas fa-lock"
-                    style="color: rgb(48, 37, 37) ;"
-                  ></span>
+                  <span class="fas fa-lock" style="color: rgb(48, 37, 37)"></span>
                 </div>
               </div>
             </div>
             <div class="input-group mb-3">
-              <input
-                type="password"
-                class="form-control"
-                placeholder="Retype password"
-                formControlName="password2"
-              />
+              <input type="password" class="form-control" placeholder="Retype password" formControlName="password2" />
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span
-                    class="fas fa-lock"
-                    style="color: rgb(48, 37, 37)"
-                  ></span>
+                  <span class="fas fa-lock" style="color: rgb(48, 37, 37)"></span>
                 </div>
               </div>
             </div>
             <div class="form-group mb-3">
-              <select
-                class="form-control"
-                formControlName="role"
-                (change)="changeRole($event)"
-              >
+              <select class="form-control" formControlName="role" (change)="changeRole($event)">
                 <option value="">Seleccione el rol</option>
                 <option *ngFor="let i of Roles">{{ i }}</option>
               </select>
@@ -194,7 +131,9 @@
             <div class="row">
               <div class="col-8">
                 <div class="col text-danger">
-                  <p *ngIf="campoNoValido('nombre')">El nombre es obligatorio</p>
+                  <p *ngIf="campoNoValido('nombre')">
+                    El nombre es obligatorio
+                  </p>
                   <p *ngIf="campoNoValido('email')">El email es obligatorio</p>
                   <p *ngIf="campoNoValido('role')">El role es obligatorio</p>
                   <p *ngIf="campoNoValido('area')">El area es obligatoria</p>
@@ -204,14 +143,10 @@
                 </div>
               </div>
               <div class="modal-footer justify-content-between">
-                <button
-                  type="button"
-                  class="btn btn-default"
-                  data-dismiss="modal"
-                >
+                <button type="button" class="btn btn-default" data-dismiss="modal">
                   Close
                 </button>
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button (click)="crearUsuarios()" class="btn btn-primary" data-dismiss="modal">Guardar</button>
               </div>
             </div>
           </form>
@@ -229,77 +164,40 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Editar Usuario</h4>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form
-            (ngSubmit)="editarUsuario()"
-            [formGroup]="registerForm"
-            autocomplete="off"
-          >
+          <form (ngSubmit)="editarUsuario()" [formGroup]="registerForm" autocomplete="off">
             <div class="input-group mb-3">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Full name"
-                formControlName="nombre"
-              />
+              <input type="text" class="form-control" placeholder="Full name" formControlName="nombre" />
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span
-                    class="fas fa-user"
-                    style="color: rgb(48, 37, 37)"
-                  ></span>
+                  <span class="fas fa-user" style="color: rgb(48, 37, 37)"></span>
                 </div>
               </div>
             </div>
             <div class="input-group mb-3">
-              <input
-                type="email"
-                class="form-control"
-                placeholder="Email"
-                formControlName="email"
-              />
+              <input type="email" class="form-control" placeholder="Email" formControlName="email" />
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span
-                    class="fas fa-envelope"
-                    style="color: rgb(48, 37, 37)"
-                  ></span>
+                  <span class="fas fa-envelope" style="color: rgb(48, 37, 37)"></span>
                 </div>
               </div>
             </div>
 
             <div class="input-group mb-3">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Area"
-                formControlName="area"
-              />
+              <input type="text" class="form-control" placeholder="Area" formControlName="area" />
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span
-                    class="fas fa-user"
-                    style="color: rgb(48, 37, 37)"
-                  ></span>
+                  <span class="fas fa-user-friends" style="color: rgb(48, 37, 37)"></span>
                 </div>
               </div>
             </div>
 
             <div class="form-group mb-3">
-              <select
-                class="form-control"
-                formControlName="role"
-                (change)="changeRole($event)"
-              >
+              <select class="form-control" formControlName="role" (change)="changeRole($event)">
                 <option value="">Seleccione el rol</option>
                 <option *ngFor="let role of Roles">{{ role }}</option>
               </select>
@@ -307,20 +205,18 @@
             <div class="row">
               <div class="col-8">
                 <div class="col text-danger">
-                  <p *ngIf="campoNoValido('nombre')">El nombre es obligatorio</p>
+                  <p *ngIf="campoNoValido('nombre')">
+                    El nombre es obligatorio
+                  </p>
                   <p *ngIf="campoNoValido('email')">El email es obligatorio</p>
                   <p *ngIf="campoNoValido('role')">El role es obligatorio</p>
                 </div>
               </div>
               <div class="modal-footer justify-content-between">
-                <button
-                  type="button"
-                  class="btn btn-default"
-                  data-dismiss="modal"
-                >
+                <button type="button" class="btn btn-default" data-dismiss="modal">
                   Close
                 </button>
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button (click)="editarUsuario()" class="btn btn-primary" data-dismiss="modal" >Guardar</button>
               </div>
             </div>
           </form>
@@ -338,81 +234,51 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Cambiar Password</h4>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <form (ngSubmit)="changePassword()" [formGroup]="cambioContrasenaForm" autocomplete="off">
             <div class="input-group mb-3">
-              <input
-                type="password"
-                class="form-control"
-                placeholder="Old Password"
-                formControlName="oldPassword"
-              />
+              <input type="password" class="form-control" placeholder="Old Password" formControlName="oldPassword" />
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span
-                    class="fas fa-lock"
-                    style="color: rgb(48, 37, 37) ;"
-                  ></span>
+                  <span class="fas fa-lock" style="color: rgb(48, 37, 37)"></span>
                 </div>
               </div>
             </div>
             <div class="input-group mb-3">
-              <input
-                type="password"
-                class="form-control"
-                placeholder="new Password"
-                formControlName="newPassword"
-              />
+              <input type="password" class="form-control" placeholder="new Password" formControlName="newPassword" />
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span
-                    class="fas fa-lock"
-                    style="color: rgb(48, 37, 37)"
-                  ></span>
+                  <span class="fas fa-lock" style="color: rgb(48, 37, 37)"></span>
                 </div>
               </div>
             </div>
             <div class="input-group mb-3">
-              <input
-                type="password"
-                class="form-control"
-                placeholder="Confirm Password"
-                formControlName="newPassword2"
-              />
+              <input type="password" class="form-control" placeholder="Confirm Password"
+                formControlName="newPassword2" />
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span
-                    class="fas fa-lock"
-                    style="color: rgb(48, 37, 37)"
-                  ></span>
+                  <span class="fas fa-lock" style="color: rgb(48, 37, 37)"></span>
                 </div>
               </div>
             </div>
-            
 
             <div class="row">
               <div class="col-8">
                 <div class="col text-danger">
-                  <p *ngIf="campoNoValido2('oldPassword')">Igresar la Contraseña antigua</p>
-                  <p *ngIf="constrasenasNoValidas2()"> Las contraseñas tienen que ser iguales</p>
-              </div>
-
+                  <p *ngIf="campoNoValido2('oldPassword')">
+                    Igresar la Contraseña antigua
+                  </p>
+                  <p *ngIf="constrasenasNoValidas2()">
+                    Las contraseñas tienen que ser iguales
+                  </p>
+                </div>
               </div>
               <div class="modal-footer justify-content-between">
-                <button
-                  type="button"
-                  class="btn btn-default"
-                  data-dismiss="modal"
-                >
+                <button type="button" class="btn btn-default" data-dismiss="modal">
                   Close
                 </button>
                 <button type="submit" class="btn btn-primary">
