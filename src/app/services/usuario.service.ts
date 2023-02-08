@@ -28,7 +28,7 @@ export class UsuarioService {
   }
 
   login(formData: LoginForm) {
-    return this.http.post(`${environment.URLBASE}/auth/login`, formData).pipe(
+    return this.http.post(`${environment.URLBASE}/login`, formData).pipe(
       tap((res: any) => {
         console.log(res);
         //  localStorage.setItem('token',res.token);

@@ -14,6 +14,7 @@ import { InsumosComponent } from './insumos/insumos.component';
 import { MaterialModule } from 'material.module';
 import { MovimientosAlmacenComponent } from './movimientos-almacen/movimientos-almacen.component';
 import { ClienteComponent } from './cliente/cliente.component';
+import { DetalleMovimientoComponent } from './detalle-movimiento/detalle-movimiento.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,7 @@ import { ClienteComponent } from './cliente/cliente.component';
     ReactiveFormsModule,
     MaterialModule
   ],
-  declarations: [PagesComponent, UsuariosComponent, CategoriaComponent, ProductosComponent, ProveedorComponent, InsumosComponent, MovimientosAlmacenComponent, ClienteComponent]
+  declarations: [PagesComponent, UsuariosComponent, CategoriaComponent, ProductosComponent, ProveedorComponent, InsumosComponent, MovimientosAlmacenComponent, ClienteComponent, DetalleMovimientoComponent]
   ,
   providers: [],
   bootstrap: [InsumosComponent],

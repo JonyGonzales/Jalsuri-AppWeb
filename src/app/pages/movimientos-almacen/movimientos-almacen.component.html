@@ -28,8 +28,8 @@
                   <th>Acciones</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr *ngFor="let i of movimientos">
+              <tbody >
+                <tr  (click)="editRecord(i.id)" *ngFor="let i of movimientos" >
                   <td>{{ i.id }}</td>
                   <td>{{ i.tipo_movimiento.nombre }}</td>
                   <td>{{ i.tipo_documento.nombre }}</td>

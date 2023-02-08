@@ -7,11 +7,13 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
 import { Cliente } from '../cliente/model/cliente';
 import { ClienteService } from '../cliente/service/cliente.service';
+import { DetalleMovimientoComponent } from '../detalle-movimiento/detalle-movimiento.component';
 import { Proveedor } from '../proveedor/model/proveedor';
 import { ProveedorService } from '../proveedor/service/proveedor.service';
 import { Movimiento_almacen } from './models/movimiento_almacen';
 import { Tipo_documento } from './models/tipo_documento';
 import { Tipo_movimiento } from './models/tipo_movimiento';
+import { DataService } from './services/dataService.service';
 import { Movimiento_almacenService } from './services/movimientoAlmacen.service';
 import { TipoDocumentoService } from './services/tipoDocumento.service';
 import { TipoMovimientoService } from './services/tipoMovimiento.service';
@@ -78,8 +80,21 @@ export class MovimientosAlmacenComponent implements OnDestroy, OnInit {
     private tipoMovimientoService: TipoMovimientoService,
     private usuarioService: UsuarioService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private dataService: DataService
   ) {}
+
+
+  editRecord(id: number) {
+    this.dataService.setSelectedId(id);
+
+    this.router
+    .navigateByUrl('./dashboard/detalleMovimientos', { skipLocationChange: true })
+    .then(() => {
+      this.router.navigate(['./dashboard/detalleMovimientos']);
+    });
+    
+  }
 
 
   ngOnInit(): void {

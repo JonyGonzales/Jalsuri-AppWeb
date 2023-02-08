@@ -10,6 +10,7 @@ import { ProveedorComponent } from './proveedor/proveedor.component';
 import { InsumosComponent } from './insumos/insumos.component';
 import { MovimientosAlmacenComponent } from './movimientos-almacen/movimientos-almacen.component';
 import { ClienteComponent } from './cliente/cliente.component';
+import { DetalleMovimientoComponent } from './detalle-movimiento/detalle-movimiento.component';
 
     // En este Modulo colocamos todas las ventanas que se exportaran como hijas del Dashboard solo dentro del Dashboard
     const routes: Routes = [
@@ -38,11 +39,11 @@ import { ClienteComponent } from './cliente/cliente.component';
              component: CategoriaComponent,
              data: { titulo: 'Categorias' },
            },
-          //  {
-          //    path: 'edit-categoria/:id',
-          //    component: EditCategoriaComponent,
-          //    data: { titulo: 'Editar Categoria' },
-          //  },
+           {
+             path: 'detalleMovimientos',
+             component: DetalleMovimientoComponent,
+             data: { titulo: 'Detalle de Movimiento' },
+           },
           {
             path: 'proveedores',
             component: ProveedorComponent,
