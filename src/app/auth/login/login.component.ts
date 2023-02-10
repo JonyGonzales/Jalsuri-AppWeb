@@ -25,7 +25,11 @@ export class LoginComponent implements OnInit {
     private usuarioSvc: UsuarioService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    localStorage.clear()
+  }
+
+
   login() {
     this.usuarioSvc.login(this.loginForm.value).subscribe(
       (res) => {

@@ -33,6 +33,7 @@ export class UsuarioService {
         //  localStorage.setItem('token',res.token);
         localStorage.setItem('usuarioId', res.id);
         localStorage.setItem('nombre', res.nombre);
+        localStorage.setItem('rol',res.role)
         console.log(res);
       })
     );
