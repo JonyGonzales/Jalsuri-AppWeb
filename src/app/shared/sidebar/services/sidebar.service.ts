@@ -36,16 +36,16 @@ export class SidebarService {
       icono: 'nav-icon fas fa-boxes',
       submenu: [
         {titulo: 'Listado de Productos',url: 'productos',icono: 'fa fa-list'},
-        {titulo: 'Agregar Productos',url: 'add-productos',icono: 'fa fa-cubes'},
+        // {titulo: 'Agregar Productos',url: 'add-productos',icono: 'fa fa-cubes'},
       ],
     },
-    {
-      titulo: 'Empleados',
-      icono: 'nav-icon fas fa-hard-hat ',
-      submenu: [
-        {titulo: 'Listado de Empleados',url: 'empleados',icono: 'fa fa-employe'},
-      ],
-    },
+    // {
+    //   titulo: 'Empleados',
+    //   icono: 'nav-icon fas fa-hard-hat ',
+    //   submenu: [
+    //     {titulo: 'Listado de Empleados',url: 'empleados',icono: 'fa fa-employe'},
+    //   ],
+    // },
     {
       titulo: 'Proveedores',
       icono: 'nav-icon fas fa-truck ',
@@ -55,14 +55,14 @@ export class SidebarService {
     },
     {
       titulo: 'Clientes',
-      icono: 'nav-icon fas fa-truck ',
+      icono: 'nav-icon fas fa-user',
       submenu: [
         {titulo: 'Listado de Clientes',url: 'clientes',icono: 'fa fa-truck'},
       ],
     },
     {
       titulo: 'Movimientos',
-      icono: 'nav-icon fas fa-truck ',
+      icono: 'nav-icon fas fa-list',
       submenu: [
         {titulo: 'Movimientos en Almacen',url: 'movimientos',icono: 'fa fa-truck'},
       ],

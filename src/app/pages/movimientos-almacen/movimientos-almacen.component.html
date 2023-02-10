@@ -6,6 +6,8 @@
           <div class="card-header">
             <h3 class="card-title">Lista de Movimiento</h3>
             <br />
+            <br />
+            <br >
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarMovimiento">
               <i class="fas fa-prescription-bottle-alt"></i> Agregar
             </button>
@@ -29,18 +31,18 @@
                 </tr>
               </thead>
               <tbody >
-                <tr  (click)="editRecord(i.id)" *ngFor="let i of movimientos" >
-                  <td>{{ i.id }}</td>
-                  <td>{{ i.tipo_movimiento.nombre }}</td>
-                  <td>{{ i.tipo_documento.nombre }}</td>
-                  <td>{{ i.numero_documento }}</td>
-                  <td *ngIf="i.proveedor != null">{{ i.proveedor.nombre }}</td>
-                  <td *ngIf="i.proveedor == null">{{ null }}</td>
-                  <td *ngIf="i.cliente != null">{{ i.cliente.nombre }}</td>
-                  <td *ngIf="i.cliente == null">{{ null }}</td>
-                  <td>{{ i.usuario.nombre }}</td>
-                  <td>{{ i.fecha_movimiento }}</td>
-                  <td>{{ i.observaciones }}</td>
+                <tr   *ngFor="let i of movimientos" >
+                  <td (click)="editRecord(i.id)">{{ i.id }}</td>
+                  <td (click)="editRecord(i.id)">{{ i.tipo_movimiento.nombre }}</td>
+                  <td (click)="editRecord(i.id)">{{ i.tipo_documento.nombre }}</td>
+                  <td (click)="editRecord(i.id)">{{ i.numero_documento }}</td>
+                  <td (click)="editRecord(i.id)" *ngIf="i.proveedor != null">{{ i.proveedor.nombre }}</td>
+                  <td (click)="editRecord(i.id)" *ngIf="i.proveedor == null">{{ null }}</td>
+                  <td (click)="editRecord(i.id)" *ngIf="i.cliente != null">{{ i.cliente.nombre }}</td>
+                  <td (click)="editRecord(i.id)" *ngIf="i.cliente == null">{{ null }}</td>
+                  <td (click)="editRecord(i.id)">{{ i.usuario.nombre }}</td>
+                  <td (click)="editRecord(i.id)">{{ i.fecha_movimiento }}</td>
+                  <td (click)="editRecord(i.id)">{{ i.observaciones }}</td>
                   <td>
                     <!-- <button class="btn btn-warning btn-xs mr-2"(click)="llenarForm(i.id)"> -->
                     <button class="btn btn-warning btn-xs mr-2">
