@@ -246,7 +246,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     this.roles.setValue(evento.target.value, {
       onlySelf: true,
     });
-  }
+  } 
 
   campoNoValido(campo: string): boolean {
     if (this.registerForm.get(campo).invalid && this.formSubmitted) {

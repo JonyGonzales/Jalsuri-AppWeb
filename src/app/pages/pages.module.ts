@@ -25,7 +25,7 @@ import { DetalleMovimientoComponent } from './detalle-movimiento/detalle-movimie
     DataTablesModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
   ],
   declarations: [PagesComponent, UsuariosComponent, CategoriaComponent, ProductosComponent, ProveedorComponent, InsumosComponent, MovimientosAlmacenComponent, ClienteComponent, DetalleMovimientoComponent]
   ,

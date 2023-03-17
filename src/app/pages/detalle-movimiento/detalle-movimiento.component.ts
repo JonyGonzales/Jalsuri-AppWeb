@@ -40,7 +40,7 @@ export class DetalleMovimientoComponent implements OnDestroy, OnInit {
       id_producto: ['', [Validators.required]],
       cantidad: ['', [Validators.required]],
       numero_documento: ['', [Validators.required]],
-      id_mov_almacen:['', [Validators.required]]
+      id_mov_almacen : [this.dataService.getSelectedId()]
     },
     {
       Validators,
@@ -97,7 +97,7 @@ get productoGet() {
   return this.registerForm.get('id_producto');
 }
 
-ProductoSeleccionado(evento) {
+productoSeleccionado(evento) {
   this.productoGet.setValue(evento.target.value, {
     onlySelf: true,
   });
@@ -105,10 +105,6 @@ ProductoSeleccionado(evento) {
 
 
 crearMovimiento() {
-  if (this.registerForm.invalid) {
-    return;
-  }
-
   console.log(this.registerForm.value);
   //Realizar posteo
   this.detalleMovService.agregar(this.registerForm.value).subscribe(
@@ -119,8 +115,7 @@ crearMovimiento() {
         text: 'Producto Agregado correctamente',
         showConfirmButton: true,
       }).then((result) => {
-        //location.reload();
-        this.reloadComponent();
+        //this.reloadComponent();
       });
     },
     (err) => {

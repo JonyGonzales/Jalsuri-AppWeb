@@ -12,27 +12,28 @@ declare var $: any;
 export class SidebarComponent implements OnInit {
   menuItems?: any[];
   nombre = '';
-  rol = 'admin';
+  rol = '';
 
   constructor(private sideBarServices: SidebarService, private router: Router) {
-    this.menuItems = this.sideBarServices.menu;
     //console.log(this.menuItems);
   }
 
   ngOnInit(): void {
-    $('[data-widget="treeview"]').Treeview('init');
-    this.nombre = localStorage.getItem('role')
-    // if (this.rol === 'admim') {
-    //   this.nombre = localStorage.getItem('nombre');
-    // }
-    // else{ this.logout()}
+    this.rol = localStorage.getItem('rol');
+    this.nombre = localStorage.getItem('nombre');
+    if ('admin' == this.rol) {
+      $('[data-widget="treeview"]').Treeview('init');
+      this.menuItems = this.sideBarServices.menu;
+    } else if ('user' == this.rol) {
+      $('[data-widget="treeview"]').Treeview('init');
+      this.menuItems = this.sideBarServices.menuUser;
+    } else {
+      this.logout();
+    }
   }
 
   logout() {
     this.router.navigateByUrl('/login');
-    // localStorage.removeItem('nombre')
-    // localStorage.removeItem('usuarioId')
-    // localStorage.removeItem('idCat')
     localStorage.clear();
   }
 }

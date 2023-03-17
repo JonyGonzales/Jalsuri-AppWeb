@@ -38,11 +38,6 @@
                       <td>{{ detMov.cantidad }}</td>
                       <td>{{ detMov.observaciones }}</td>
                       <td>
-                        <!-- <button class="btn btn-warning btn-xs mr-2"(click)="llenarForm(i.id)"> -->
-                        <button class="btn btn-warning btn-xs mr-2">
-                          <i class="fas fa-pencil-alt"></i>
-                        </button>
-    
                         <button class="btn btn-danger btn-xs">
                           <!-- <button class="btn btn-danger btn-xs" (click)="eliminarCategoria(i.id)"> -->
                           <i class="fas fa-trash-alt"></i>
@@ -58,6 +53,72 @@
           </div>
         </div>
     
+          <!-- /Modal Agregar Movimiento -->
+  <div class="modal fade" id="agregarMovimiento">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Agregar Movimiento</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="crearMovimiento()" [formGroup]="registerForm" autocomplete="off">
+            <div class="form-group mb-3">
+              <select class="form-control" formControlName="id_producto" (change)="productoSeleccionado($event)">
+                <option value="">Seleccione un Producto</option>
+                <option *ngFor="let p of producto" value="{{ p.id }}">
+                  {{ p.nombre }}
+                </option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <input type="number" class="form-control" placeholder="Cantidad" formControlName="cantidad" />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-text-height" style="color: rgb(48, 37, 37)"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Observaciones" formControlName="observaciones" />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-text-height" style="color: rgb(48, 37, 37)"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-8">
+                <div class="col text-danger">
+                  <!-- <p *ngIf="campoNoValido('tipo_movimiento')">
+                        El tipo de movimiento es obligatorio
+                      </p>
+                      <p *ngIf="campoNoValido('tipo_documento')"></p>
+                      <p *ngIf="campoNoValido('usuario')">
+                        El usuario es obligatoria
+                      </p> -->
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                  Close
+                </button>
+                <button class="btn btn-primary">
+                  Guardar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+  </div>
     
       </div>
 

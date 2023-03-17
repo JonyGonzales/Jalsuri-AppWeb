@@ -1,7 +1,31 @@
 table {
   width: 100%;
 }
+.highlight-row {
+  background-color: greenyellow;
+  color: black;
+}
 
-button {
-  margin: 0 8px 8px 0;
+.mat-header-row {
+  background-color: #EEEEEE;
+}
+
+.mat-row:nth-child(even) {
+  background-color: #F5F5F5;
+}
+
+.mat-row:hover {
+  background-color: #ECEFF1;
+  cursor: pointer;
+}
+
+.mat-cell, .mat-header-cell {
+  border-bottom-width: 0;
+  font-size: 14px;
+  padding: 16px 24px;
+  text-align: left;
+}
+
+.mat-header-cell {
+  font-weight: bold;
 }

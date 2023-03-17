@@ -1,1 +1,243 @@
-<p>insumos works!</p>
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Lista de Movimiento</h3>
+            <br />
+            <br>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarMovimiento">
+              <i class="fas fa-prescription-bottle-alt"></i> Agregar
+            </button>
+
+            <button mat-raised-button color="primary" (click)="exportAsExcel()">Exportar a Excel</button>
+            <br />
+            <br>
+            <mat-form-field>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Buscar">
+            </mat-form-field>
+
+          </div>
+          <!-- /.card-header -->
+
+          <div class="mat-table">
+
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" cdk-table-responsive>
+
+              <!-- Id Column -->
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Id </th>
+                <td (click)="editRecord(element.id)" mat-cell *matCellDef="let element"> {{element.id}} </td>
+              </ng-container>
+
+              <!-- Fecha_movimiento Column -->
+              <ng-container matColumnDef="tipo_movimiento">
+                <th mat-header-cell *matHeaderCellDef> Tipo de Movimiento </th>
+                <td (click)="editRecord(element.id)" mat-cell *matCellDef="let element" [ngClass]="{'ingreso': element.tipo_movimiento.tipo === 'I'}">
+                  {{element.tipo_movimiento.nombre}} </td>
+              </ng-container>
+
+              <!--  Numero_documento Column -->
+              <ng-container matColumnDef="numero_documento">
+                <th mat-header-cell *matHeaderCellDef> Número de Documento </th>
+                <td (click)="editRecord(element.id)" mat-cell *matCellDef="let element"> {{element.numero_documento}} </td>
+              </ng-container>
+
+              <!-- Tipo_documento Column -->
+              <ng-container matColumnDef="tipo_documento">
+                <th mat-header-cell *matHeaderCellDef>Documento</th>
+                <td (click)="editRecord(element.id)" mat-cell *matCellDef="let element"> {{element.tipo_documento.nombre}} </td>
+              </ng-container>
+
+              <!-- Proveedor Column -->
+              <ng-container matColumnDef="proveedor">
+                <th mat-header-cell *matHeaderCellDef>Proveedor</th>
+                <td (click)="editRecord(element.id)" mat-cell *matCellDef="let element"> {{element.proveedor ? element.proveedor.nombre : ''}} </td>
+              </ng-container>
+
+              <!-- Cliente Column -->
+              <ng-container matColumnDef="cliente">
+                <th mat-header-cell *matHeaderCellDef>Cliente</th>
+                <td (click)="editRecord(element.id)" mat-cell *matCellDef="let element"> {{element.cliente ? element.cliente.nombre : ''}} </td>
+              </ng-container>
+
+              <!-- Fecha_movimiento Column -->
+              <ng-container matColumnDef="fecha_movimiento">
+                <th mat-header-cell *matHeaderCellDef> Fecha de Movimiento </th>
+                <td (click)="editRecord(element.id)" mat-cell *matCellDef="let element"> {{element.fecha_movimiento}} </td>
+              </ng-container>
+
+              <!-- Observaciones Column -->
+              <ng-container matColumnDef="observaciones">
+                <th mat-header-cell *matHeaderCellDef> Observaciones </th>
+                <td (click)="editRecord(element.id)" mat-cell *matCellDef="let element"> {{element.observaciones}} </td>
+              </ng-container>
+
+
+              <!-- Usuario Column -->
+              <ng-container matColumnDef="usuario">
+                <th mat-header-cell *matHeaderCellDef> Usuario </th>
+                <td (click)="editRecord(element.id)" mat-cell *matCellDef="let element"> {{element.usuario.nombre}} </td>
+              </ng-container>
+
+              <!-- Acciones Column -->
+              <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                <td mat-cell *matCellDef="let element">
+                  <!-- <button class="btn btn-warning btn-xs mr-2"(click)="llenarForm(i.id)"> -->
+                  <button class="btn btn-warning btn-xs mr-2">
+                    <i class="fas fa-pencil-alt"></i>
+                  </button>
+                  <button class="btn btn-danger btn-xs">
+                    <!-- <button class="btn btn-danger btn-xs" (click)="eliminarCategoria(i.id)"> -->
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10"></mat-paginator>
+
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- /Modal Agregar Movimiento -->
+  <div class="modal fade" id="agregarMovimiento">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Agregar Movimiento</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+
+
+
+          <form (ngSubmit)="crearMovimiento()" [formGroup]="registerForm" autocomplete="off">
+            <div class="form-group mb-3">
+              <select class="form-control" formControlName="tipo_movimiento" (change)="tipoMovSeleccionado($event)">
+                <option value="">Seleccion de Movimiento</option>
+                <option *ngFor="let m of tipoMov" [value]="m.id" id="{{ m.tipo }}">
+                  {{ m.nombre }}
+                </option>
+              </select>
+            </div>
+            <!-- <p class="alert alert-danger"
+                  *ngIf="registerForm.get('tipo_movimiento')?.touched && registerForm.get('tipo_movimiento')?.errors?.['required']">
+                  El tipo de Movimiento es obligatorio
+                </p> -->
+
+            <div class="form-group mb-3">
+              <select class="form-control" formControlName="tipo_documento" (change)="tipoDocSeleccionado($event)">
+                <option value="">Seleccione Documento</option>
+                <option *ngFor="let d of tipoDoc" value="{{ d.id }}">
+                  {{ d.nombre }}
+                </option>
+              </select>
+            </div>
+            <!-- <p class="alert alert-danger"
+                  *ngIf="registerForm.get('tipo_documento')?.touched && registerForm.get('tipo_documento')?.errors?.['required']">
+                  El tipo de documento es obligatorio
+                </p> -->
+
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Numero de Documento"
+                formControlName="numero_documento" />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-text-height" style="color: rgb(48, 37, 37)"></span>
+                </div>
+              </div>
+            </div>
+            <!-- <p class="alert alert-danger"
+                  *ngIf="registerForm.get('numero_documento')?.touched && registerForm.get('numero_documento')?.errors?.['required']">
+                  El número de documento es obligatorio
+                </p> -->
+
+
+            <div *ngIf=" tiposeleccionado === 'I' " class="form-group mb-3">
+              <select class="form-control" formControlName="proveedor" (change)="proveedorSeleccionado($event)">
+                <option value="">Seleccione un Proveedor</option>
+                <option *ngFor="let p of proveedores" value="{{ p.id }}">
+                  {{ p.nombre }}
+                </option>
+              </select>
+            </div>
+
+
+            <div *ngIf=" this.tiposeleccionado === 'S' " class="form-group mb-3">
+              <select class="form-control" formControlName="cliente" (change)="clienteSeleccionado($event)">
+                <option value="">Seleccione un Cliente</option>
+                <option *ngFor="let c of clientes" value="{{ c.id }}">
+                  {{ c.nombre }}
+                </option>
+              </select>
+            </div>
+
+
+
+            <div class="form-group mb-3">
+              <select class="form-control" formControlName="usuario" (change)="usuarioSeleccionado($event)">
+                <option value="">Seleccione un Usuario</option>
+                <option *ngFor="let u of usuarios" value="{{ u.id }}">
+                  {{ u.nombre }}
+                </option>
+              </select>
+            </div>
+            <!-- <p class="alert alert-danger"
+                  *ngIf="registerForm.get('usuario')?.touched && registerForm.get('usuario')?.errors?.['required']">
+                  El Usuario es obligatorio
+                </p> -->
+
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Observaciones" formControlName="observaciones" />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-text-height" style="color: rgb(48, 37, 37)"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-8">
+                <div class="col text-danger">
+                  <!-- <p *ngIf="campoNoValido('tipo_movimiento')">
+                        El tipo de movimiento es obligatorio
+                      </p>
+                      <p *ngIf="campoNoValido('tipo_documento')"></p>
+                      <p *ngIf="campoNoValido('usuario')">
+                        El usuario es obligatoria
+                      </p> -->
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                  Close
+                </button>
+                <button data-dismiss="modal" (click)="crearMovimiento()" class="btn btn-primary">
+                  Guardar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+  </div>
+</section>
